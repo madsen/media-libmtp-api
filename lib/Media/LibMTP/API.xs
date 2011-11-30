@@ -569,6 +569,16 @@ DESTROY(self)
 
 
 #--------------------------------------------------------------------
+MODULE = Media::LibMTP::API  PACKAGE = Media::LibMTP::API::MTPDevice
+
+void
+DESTROY(self)
+	MLA_MTPDevice	self
+   CODE:
+	LIBMTP_Release_Device_List(self);
+
+
+#--------------------------------------------------------------------
 MODULE = Media::LibMTP::API  PACKAGE = Media::LibMTP::API::Error
 
 LIBMTP_error_number_t
