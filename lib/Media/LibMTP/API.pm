@@ -74,6 +74,11 @@ sub import
   goto &Exporter::import;
 } # end import
 
+{
+  package Media::LibMTP::API::FolderList;
+  our @ISA = ('Media::LibMTP::API::Folder');
+}
+
 require XSLoader;
 XSLoader::load('Media::LibMTP::API', $VERSION);
 

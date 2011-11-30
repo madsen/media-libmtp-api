@@ -12,6 +12,7 @@ typedef LIBMTP_file_t *            MLA_File;
 typedef LIBMTP_filesampledata_t *  MLA_FileSampleData;
 typedef LIBMTP_error_t *           MLA_Error;
 typedef LIBMTP_folder_t *          MLA_Folder;
+typedef LIBMTP_folder_t *          MLA_FolderList; /* needs DESTROY */
 typedef LIBMTP_mtpdevice_t *       MLA_MTPDevice;
 typedef LIBMTP_playlist_t *        MLA_Playlist;
 typedef LIBMTP_raw_device_t *      MLA_RawDevice;
@@ -246,11 +247,11 @@ LIBMTP_Get_Files_And_Folders(self, arg1, arg2)
 	uint32_t	arg1
 	uint32_t	arg2
 
-MLA_Folder
+MLA_FolderList
 LIBMTP_Get_Folder_List(self)
 	MLA_MTPDevice	self
 
-MLA_Folder
+MLA_FolderList
 LIBMTP_Get_Folder_List_For_Storage(self, arg1)
 	MLA_MTPDevice	self
 	uint32_t	arg1
@@ -646,13 +647,7 @@ new(class)
 #--------------------------------------------------------------------
 MODULE = Media::LibMTP::API  PACKAGE = Media::LibMTP::API::Folder
 
-void
-DESTROY(self)
-	MLA_Folder	self
-   CODE:
-	LIBMTP_destroy_folder_t(self);
-
-MLA_Folder
+MLA_FolderList
 new(class)
 	SV *	class
    CODE:
@@ -666,6 +661,16 @@ MLA_Folder
 LIBMTP_Find_Folder(arg0, arg1)
 	MLA_Folder	arg0
 	uint32_t	arg1
+
+
+#--------------------------------------------------------------------
+MODULE = Media::LibMTP::API  PACKAGE = Media::LibMTP::API::FolderList
+
+void
+DESTROY(self)
+	MLA_FolderList	self
+   CODE:
+	LIBMTP_destroy_folder_t(self);
 
 
 #--------------------------------------------------------------------
