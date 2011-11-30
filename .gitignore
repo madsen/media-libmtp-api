@@ -4,12 +4,13 @@
 /Build
 /Build.bat
 Makefile
-/META.yml
-/MYMETA.yml
+/META.*
+/MYMETA.*
 /pm_to_blib
 Media-LibMTP-*.tar.gz
 Media-LibMTP-*/
 /test-results/
 *.c
+*.o
 *.obj
 *.pdb

@@ -10,7 +10,7 @@
 ^\#
 ^MANIFEST\.
 ^Makefile$
-^MYMETA.yml
+^MYMETA.
 ^README.md
 ^\.
 ^blib/
@@ -22,3 +22,4 @@
 ^Build.bat$
 ^dist\.ini$
 ^tools/loom\.pl
+^start/

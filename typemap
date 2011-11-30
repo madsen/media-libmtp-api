@@ -1,0 +1,32 @@
+LIBMTP_album_t *				T_PTROBJ
+LIBMTP_album_t const *				T_PTROBJ
+LIBMTP_allowed_values_t *			T_PTROBJ
+LIBMTP_device_entry_t **			T_PTROBJ
+LIBMTP_devicestorage_t *			T_PTROBJ
+LIBMTP_error_number_t				T_PTROBJ
+LIBMTP_error_t *				T_PTROBJ
+LIBMTP_event_t *				T_PTROBJ
+LIBMTP_file_t *					T_PTROBJ
+LIBMTP_filesampledata_t *			T_PTROBJ
+LIBMTP_filesampledata_t **			T_PTROBJ
+LIBMTP_filetype_t				T_PTROBJ
+LIBMTP_folder_t *				T_PTROBJ
+LIBMTP_mtpdevice_t *				T_PTROBJ
+LIBMTP_mtpdevice_t **				T_PTROBJ
+LIBMTP_playlist_t *				T_PTROBJ
+LIBMTP_property_t				T_PTROBJ
+LIBMTP_raw_device_t *				T_PTROBJ
+LIBMTP_raw_device_t **				T_PTROBJ
+LIBMTP_track_t *				T_PTROBJ
+LIBMTP_track_t const *				T_PTROBJ
+char const *					T_PTROBJ
+const char *					T_PTROBJ
+int *						T_PTROBJ
+uint16_t					T_PTROBJ
+uint16_t *					T_PTROBJ
+uint16_t **					T_PTROBJ
+uint32_t					T_UV
+uint64_t					T_PTROBJ
+uint8_t						T_U_CHAR
+uint8_t *					T_PV
+void const *					T_PTROBJ

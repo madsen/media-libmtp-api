@@ -1,7 +1,13 @@
 Media-LibMTP version {{$version}}, released {{$date}}
 
 
-This module {{ die "needs a description (README.md too)" }}.
+This module provides a Perl interface to LibMTP, which is an Initiator
+implementation of the Media Transfer Protocol (MTP) in the form of a
+library suitable primarily for POSIX compliant operating systems.
+
+LibMTP is not included; you must install it separately.
+
+See http://libmtp.sourceforge.net for details.
 
 
 

@@ -14,10 +14,10 @@ package Media::LibMTP;
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See either the
 # GNU General Public License or the Artistic License for more details.
 #
-# ABSTRACT:
+# ABSTRACT: Use LibMTP to access media players
 #---------------------------------------------------------------------
 
-use 5.008;
+use 5.010;
 use strict;
 use warnings;
 
