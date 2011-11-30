@@ -1,4 +1,5 @@
 MLA_Album					T_PTROBJ_LIBMTP
+MLA_AlbumList					T_PTROBJ_LIBMTP
 MLA_AllowedValues				T_PTROBJ_LIBMTP
 MLA_Error					T_PTROBJ_LIBMTP
 MLA_File					T_PTROBJ_LIBMTP
@@ -19,6 +20,7 @@ LIBMTP_filetype_t				T_IV
 LIBMTP_property_t				T_IV
 uint16_t					T_UV
 uint32_t					T_UV
+uint32_t *					T_ARRAY
 uint64_t					T_NV
 uint8_t						T_U_CHAR
 

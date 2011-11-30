@@ -78,6 +78,10 @@ sub import
 } # end import
 
 {
+  package Media::LibMTP::API::AlbumList;
+  our @ISA = ('Media::LibMTP::API::Album');
+}
+{
   package Media::LibMTP::API::FolderList;
   our @ISA = ('Media::LibMTP::API::Folder');
 }

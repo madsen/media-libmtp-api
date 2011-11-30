@@ -7,6 +7,7 @@
 #include <libmtp.h>
 
 typedef LIBMTP_album_t *           MLA_Album;
+typedef LIBMTP_album_t *           MLA_AlbumList; /* needs DESTROY */
 typedef LIBMTP_allowed_values_t *  MLA_AllowedValues;
 typedef LIBMTP_file_t *            MLA_File;
 typedef LIBMTP_filesampledata_t *  MLA_FileSampleData;
@@ -81,13 +82,101 @@ LIBMTP_Set_Debug(arg0)
 #--------------------------------------------------------------------
 MODULE = Media::LibMTP::API  PACKAGE = Media::LibMTP::API::Album
 
-MLA_Album
+MLA_AlbumList
 new(class)
 	SV *	class
    CODE:
 	RETVAL = LIBMTP_new_album_t();
    OUTPUT:
 	RETVAL
+
+uint32_t
+album_id(self)
+	MLA_Album	self
+   CODE:
+	RETVAL = self->album_id;
+   OUTPUT:
+	RETVAL
+
+uint32_t
+parent_id(self)
+	MLA_Album	self
+   CODE:
+	RETVAL = self->parent_id;
+   OUTPUT:
+	RETVAL
+
+uint32_t
+storage_id(self)
+	MLA_Album	self
+   CODE:
+	RETVAL = self->storage_id;
+   OUTPUT:
+	RETVAL
+
+Utf8String
+name(self)
+	MLA_Album	self
+   CODE:
+	RETVAL = self->name;
+   OUTPUT:
+	RETVAL
+
+Utf8String
+artist(self)
+	MLA_Album	self
+   CODE:
+	RETVAL = self->artist;
+   OUTPUT:
+	RETVAL
+
+Utf8String
+composer(self)
+	MLA_Album	self
+   CODE:
+	RETVAL = self->composer;
+   OUTPUT:
+	RETVAL
+
+Utf8String
+genre(self)
+	MLA_Album	self
+   CODE:
+	RETVAL = self->genre;
+   OUTPUT:
+	RETVAL
+
+uint32_t *
+tracks(self)
+	MLA_Album	self
+   PREINIT:
+	uint32_t size_RETVAL;
+   CODE:
+	size_RETVAL = self->no_tracks;
+	RETVAL = self->tracks;
+   OUTPUT:
+	RETVAL
+   CLEANUP:
+	XSRETURN(size_RETVAL);
+
+uint32_t
+no_tracks(self)
+	MLA_Album	self
+   CODE:
+	RETVAL = self->no_tracks;
+   OUTPUT:
+	RETVAL
+
+MLA_Album
+next(self)
+	MLA_Album	self
+   CODE:
+	RETVAL = self->next;
+   OUTPUT:
+	RETVAL
+
+#--------------------------------------------------------------------
+MODULE = Media::LibMTP::API  PACKAGE = Media::LibMTP::API::AlbumList
 
 void
 DESTROY(self)
@@ -157,16 +246,16 @@ LIBMTP_Dump_Errorstack(self)
 #// 	MLA_MTPDevice		self
 #// 	LIBMTP_devicestorage_t *	arg1
 
-MLA_Album
+MLA_AlbumList
 LIBMTP_Get_Album(self, arg1)
 	MLA_MTPDevice	self
 	uint32_t	arg1
 
-MLA_Album
+MLA_AlbumList
 LIBMTP_Get_Album_List(self)
 	MLA_MTPDevice	self
 
-MLA_Album
+MLA_AlbumList
 LIBMTP_Get_Album_List_For_Storage(self, arg1)
 	MLA_MTPDevice	self
 	uint32_t	arg1
@@ -716,7 +805,7 @@ MODULE = Media::LibMTP::API  PACKAGE = Media::LibMTP::API::FolderList
 
 void
 DESTROY(self)
-	MLA_FolderList	self
+	MLA_Folder	self
    CODE:
 	LIBMTP_destroy_folder_t(self);
 
