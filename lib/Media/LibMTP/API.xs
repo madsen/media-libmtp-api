@@ -17,6 +17,7 @@ typedef LIBMTP_playlist_t *        MLA_Playlist;
 typedef LIBMTP_raw_device_t *      MLA_RawDevice;
 typedef LIBMTP_track_t *           MLA_Track;
 
+typedef const char *               Utf8StringConst;
 typedef char *                     Utf8String;
 typedef char *                     Utf8String2Free;
 
@@ -43,14 +44,14 @@ LIBMTP_Check_Specific_Device(busno, devno)
 #//  	MLA_MTPDevice *		arg0
 #//
 
-Utf8String
+Utf8StringConst
 LIBMTP_Get_Filetype_Description(arg0)
 	LIBMTP_filetype_t	arg0
 
 MLA_MTPDevice
 LIBMTP_Get_First_Device()
 
-Utf8String
+Utf8StringConst
 LIBMTP_Get_Property_Description(inproperty)
 	LIBMTP_property_t	inproperty
 

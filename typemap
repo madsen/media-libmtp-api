@@ -10,6 +10,7 @@ MLA_RawDevice					T_PTROBJ_LIBMTP
 MLA_Track					T_PTROBJ_LIBMTP
 
 Utf8String					T_PV_UTF8
+Utf8StringConst					T_PV_UTF8
 Utf8String2Free					T_PV_UTF8_FREE
 
 LIBMTP_error_number_t				T_IV
