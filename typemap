@@ -1,32 +1,37 @@
-LIBMTP_album_t *				T_PTROBJ
-LIBMTP_album_t const *				T_PTROBJ
-LIBMTP_allowed_values_t *			T_PTROBJ
-LIBMTP_device_entry_t **			T_PTROBJ
-LIBMTP_devicestorage_t *			T_PTROBJ
-LIBMTP_error_number_t				T_PTROBJ
-LIBMTP_error_t *				T_PTROBJ
-LIBMTP_event_t *				T_PTROBJ
-LIBMTP_file_t *					T_PTROBJ
-LIBMTP_filesampledata_t *			T_PTROBJ
-LIBMTP_filesampledata_t **			T_PTROBJ
-LIBMTP_filetype_t				T_PTROBJ
-LIBMTP_folder_t *				T_PTROBJ
-LIBMTP_mtpdevice_t *				T_PTROBJ
-LIBMTP_mtpdevice_t **				T_PTROBJ
-LIBMTP_playlist_t *				T_PTROBJ
-LIBMTP_property_t				T_PTROBJ
-LIBMTP_raw_device_t *				T_PTROBJ
-LIBMTP_raw_device_t **				T_PTROBJ
-LIBMTP_track_t *				T_PTROBJ
-LIBMTP_track_t const *				T_PTROBJ
-char const *					T_PTROBJ
-const char *					T_PTROBJ
-int *						T_PTROBJ
-uint16_t					T_PTROBJ
-uint16_t *					T_PTROBJ
-uint16_t **					T_PTROBJ
+MLA_Album					T_PTROBJ_LIBMTP
+MLA_AllowedValues				T_PTROBJ_LIBMTP
+MLA_Error					T_PTROBJ_LIBMTP
+MLA_File					T_PTROBJ_LIBMTP
+MLA_FileSampleData				T_PTROBJ_LIBMTP
+MLA_Folder					T_PTROBJ_LIBMTP
+MLA_MTPDevice					T_PTROBJ_LIBMTP
+MLA_Playlist					T_PTROBJ_LIBMTP
+MLA_RawDevice					T_PTROBJ_LIBMTP
+MLA_Track					T_PTROBJ_LIBMTP
+
+LIBMTP_error_number_t				T_IV
+LIBMTP_filetype_t				T_IV
+LIBMTP_property_t				T_IV
+char const *					T_PV
+const char *					T_PV
+uint16_t					T_UV
 uint32_t					T_UV
-uint64_t					T_PTROBJ
+uint64_t					T_NV
 uint8_t						T_U_CHAR
-uint8_t *					T_PV
-void const *					T_PTROBJ
+
+#############################################################################
+INPUT
+T_PTROBJ_LIBMTP
+	if (SvROK($arg) && sv_derived_from($arg, \"${(my $ntt=$ntype)=~s/^MLA_/Media::LibMTP::API::/g;\$ntt}\")) {
+	    IV tmp = SvIV((SV*)SvRV($arg));
+	    $var = INT2PTR($type,tmp);
+	}
+	else
+	    Perl_croak(aTHX_ \"%s: %s is not of type %s\",
+			${$ALIAS?\q[GvNAME(CvGV(cv))]:\qq[\"$pname\"]},
+			\"$var\", \"${(my $ntt=$ntype)=~s/^MLA_/Media::LibMTP::API::/g;\$ntt}\")
+
+#############################################################################
+OUTPUT
+T_PTROBJ_LIBMTP
+	sv_setref_pv($arg, \"${(my $ntt=$ntype)=~s/^MLA_/Media::LibMTP::API::/g;\$ntt}\", (void*)$var);
