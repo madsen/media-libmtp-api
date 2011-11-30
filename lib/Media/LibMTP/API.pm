@@ -30,7 +30,10 @@ use Exporter ();
 our %EXPORT_TAGS;
 use Media::LibMTP::API::Constants ();
 
-our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
+our @EXPORT_OK = (
+  qw(Get_Filetype_Description Get_First_Device Get_Property_Description),
+  @{ $EXPORT_TAGS{'all'} }
+);
 
 # This AUTOLOAD is used to 'autoload' constants from the constant()
 # XS function.
