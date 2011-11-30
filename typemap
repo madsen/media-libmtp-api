@@ -9,11 +9,12 @@ MLA_Playlist					T_PTROBJ_LIBMTP
 MLA_RawDevice					T_PTROBJ_LIBMTP
 MLA_Track					T_PTROBJ_LIBMTP
 
+Utf8String					T_PV_UTF8
+Utf8String2Free					T_PV_UTF8_FREE
+
 LIBMTP_error_number_t				T_IV
 LIBMTP_filetype_t				T_IV
 LIBMTP_property_t				T_IV
-char const *					T_PV
-const char *					T_PV
 uint16_t					T_UV
 uint32_t					T_UV
 uint64_t					T_NV
@@ -31,7 +32,29 @@ T_PTROBJ_LIBMTP
 			${$ALIAS?\q[GvNAME(CvGV(cv))]:\qq[\"$pname\"]},
 			\"$var\", \"${(my $ntt=$ntype)=~s/^MLA_/Media::LibMTP::API::/g;\$ntt}\")
 
+T_PV_UTF8
+	sv_utf8_upgrade((SV*)$arg);
+	$var = ($type)SvPV_nolen($arg)
+
+
 #############################################################################
 OUTPUT
 T_PTROBJ_LIBMTP
 	sv_setref_pv($arg, \"${(my $ntt=$ntype)=~s/^MLA_/Media::LibMTP::API::/g;\$ntt}\", (void*)$var);
+
+T_PV_UTF8_FREE
+	if ($var) {
+	  sv_setpv((SV*)$arg, $var);
+	  SvUTF8_on((SV*)$arg);
+	  free($var);
+	} else {
+	  SvOK_off((SV*)$arg); /* Undef */
+	}
+
+T_PV_UTF8
+	if ($var) {
+	  sv_setpv((SV*)$arg, $var);
+	  SvUTF8_on((SV*)$arg);
+	} else {
+	  SvOK_off((SV*)$arg); /* Undef */
+	}

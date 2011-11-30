@@ -17,6 +17,9 @@ typedef LIBMTP_playlist_t *        MLA_Playlist;
 typedef LIBMTP_raw_device_t *      MLA_RawDevice;
 typedef LIBMTP_track_t *           MLA_Track;
 
+typedef char *                     Utf8String;
+typedef char *                     Utf8String2Free;
+
 #include "const-c.inc"
 
 MODULE = Media::LibMTP::API  PACKAGE = Media::LibMTP::API  PREFIX = LIBMTP_
@@ -35,7 +38,7 @@ LIBMTP_Clear_Errorstack(arg0)
 uint32_t
 LIBMTP_Create_Folder(arg0, arg1, arg2, arg3)
 	MLA_MTPDevice	arg0
-	char *		arg1
+	Utf8String	arg1
 	uint32_t	arg2
 	uint32_t	arg3
 
@@ -119,7 +122,7 @@ LIBMTP_Get_Allowed_Property_Values(arg0, arg1, arg2, arg3)
 #// 	MLA_MTPDevice		arg0
 #// 	char **	arg1
 
-char *
+Utf8String2Free
 LIBMTP_Get_Deviceversion(arg0)
 	MLA_MTPDevice	arg0
 
@@ -175,7 +178,7 @@ LIBMTP_Get_Files_And_Folders(arg0, arg1, arg2)
 	uint32_t	arg1
 	uint32_t	arg2
 
-char const *
+Utf8String
 LIBMTP_Get_Filetype_Description(arg0)
 	LIBMTP_filetype_t	arg0
 
@@ -191,15 +194,15 @@ LIBMTP_Get_Folder_List_For_Storage(arg0, arg1)
 	MLA_MTPDevice	arg0
 	uint32_t	arg1
 
-char *
+Utf8String2Free
 LIBMTP_Get_Friendlyname(arg0)
 	MLA_MTPDevice	arg0
 
-char *
+Utf8String2Free
 LIBMTP_Get_Manufacturername(arg0)
 	MLA_MTPDevice	arg0
 
-char *
+Utf8String2Free
 LIBMTP_Get_Modelname(arg0)
 	MLA_MTPDevice	arg0
 
@@ -212,7 +215,7 @@ MLA_Playlist
 LIBMTP_Get_Playlist_List(arg0)
 	MLA_MTPDevice	arg0
 
-char const *
+Utf8String
 LIBMTP_Get_Property_Description(inproperty)
 	LIBMTP_property_t	inproperty
 
@@ -235,7 +238,7 @@ LIBMTP_Get_Representative_Sample(arg0, arg1, arg2)
 #// 	MLA_MTPDevice		arg0
 #// 	char **	arg1
 
-char *
+Utf8String2Free
 LIBMTP_Get_Serialnumber(arg0)
 	MLA_MTPDevice	arg0
 
@@ -244,7 +247,7 @@ LIBMTP_Get_Storage(arg0, arg1)
 	MLA_MTPDevice	arg0
 	int		arg1
 
-char *
+Utf8String2Free
 LIBMTP_Get_String_From_Object(arg0, arg1, arg2)
 	MLA_MTPDevice		arg0
 	uint32_t		arg1
@@ -263,7 +266,7 @@ LIBMTP_Get_String_From_Object(arg0, arg1, arg2)
 #// 	uint16_t **	arg1
 #// 	uint16_t *	arg2
 
-char *
+Utf8String2Free
 LIBMTP_Get_Syncpartner(arg0)
 	MLA_MTPDevice	arg0
 
@@ -445,7 +448,7 @@ int
 LIBMTP_Set_Album_Name(arg0, arg1, arg2)
 	MLA_MTPDevice	arg0
 	MLA_Album	arg1
-	const char *	arg2
+	Utf8String	arg2
 
 void
 LIBMTP_Set_Debug(arg0)
@@ -455,31 +458,31 @@ int
 LIBMTP_Set_File_Name(arg0, arg1, arg2)
 	MLA_MTPDevice	arg0
 	MLA_File	arg1
-	const char *	arg2
+	Utf8String	arg2
 
 int
 LIBMTP_Set_Folder_Name(arg0, arg1, arg2)
 	MLA_MTPDevice	arg0
 	MLA_Folder	arg1
-	const char *	arg2
+	Utf8String	arg2
 
 int
 LIBMTP_Set_Friendlyname(arg0, arg1)
 	MLA_MTPDevice	arg0
-	char const *	arg1
+	Utf8String	arg1
 
 int
 LIBMTP_Set_Object_Filename(arg0, arg1, arg2)
 	MLA_MTPDevice	arg0
 	uint32_t	arg1
-	char *		arg2
+	Utf8String	arg2
 
 int
 LIBMTP_Set_Object_String(arg0, arg1, arg2, arg3)
 	MLA_MTPDevice		arg0
 	uint32_t		arg1
 	LIBMTP_property_t	arg2
-	char const *		arg3
+	Utf8String		arg3
 
 int
 LIBMTP_Set_Object_u16(arg0, arg1, arg2, arg3)
@@ -506,18 +509,18 @@ int
 LIBMTP_Set_Playlist_Name(arg0, arg1, arg2)
 	MLA_MTPDevice	arg0
 	MLA_Playlist	arg1
-	const char *	arg2
+	Utf8String	arg2
 
 int
 LIBMTP_Set_Syncpartner(arg0, arg1)
 	MLA_MTPDevice	arg0
-	char const *	arg1
+	Utf8String	arg1
 
 int
 LIBMTP_Set_Track_Name(arg0, arg1, arg2)
 	MLA_MTPDevice	arg0
 	MLA_Track	arg1
-	const char *	arg2
+	Utf8String	arg2
 
 int
 LIBMTP_Track_Exists(arg0, arg1)
@@ -589,7 +592,7 @@ errornumber(self)
    OUTPUT:
  	RETVAL
 
-char *
+Utf8String
 error_text(self)
 	MLA_Error	self
    CODE:
