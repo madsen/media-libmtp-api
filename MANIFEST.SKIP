@@ -22,4 +22,5 @@
 ^Build.bat$
 ^dist\.ini$
 ^tools/loom\.pl
+^tools/makeAcc\.pl
 ^start/

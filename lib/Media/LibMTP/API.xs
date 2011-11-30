@@ -87,7 +87,7 @@ new(class)
    CODE:
 	RETVAL = LIBMTP_new_album_t();
    OUTPUT:
- 	RETVAL
+	RETVAL
 
 void
 DESTROY(self)
@@ -589,7 +589,7 @@ errornumber(self)
    CODE:
 	RETVAL = self->errornumber;
    OUTPUT:
- 	RETVAL
+	RETVAL
 
 Utf8String
 error_text(self)
@@ -597,7 +597,7 @@ error_text(self)
    CODE:
 	RETVAL = self->error_text;
    OUTPUT:
- 	RETVAL
+	RETVAL
 
 MLA_Error
 next(self)
@@ -605,7 +605,7 @@ next(self)
    CODE:
 	RETVAL = self->next;
    OUTPUT:
- 	RETVAL
+	RETVAL
 
 
 #--------------------------------------------------------------------
@@ -623,7 +623,7 @@ new(class)
    CODE:
 	RETVAL = LIBMTP_new_file_t();
    OUTPUT:
- 	RETVAL
+	RETVAL
 
 
 #--------------------------------------------------------------------
@@ -641,7 +641,7 @@ new(class)
    CODE:
 	RETVAL = LIBMTP_new_filesampledata_t();
    OUTPUT:
- 	RETVAL
+	RETVAL
 
 
 #--------------------------------------------------------------------
@@ -653,7 +653,55 @@ new(class)
    CODE:
 	RETVAL = LIBMTP_new_folder_t();
    OUTPUT:
- 	RETVAL
+	RETVAL
+
+uint32_t
+folder_id(self)
+	MLA_Folder	self
+   CODE:
+	RETVAL = self->folder_id;
+   OUTPUT:
+	RETVAL
+
+uint32_t
+parent_id(self)
+	MLA_Folder	self
+   CODE:
+	RETVAL = self->parent_id;
+   OUTPUT:
+	RETVAL
+
+uint32_t
+storage_id(self)
+	MLA_Folder	self
+   CODE:
+	RETVAL = self->storage_id;
+   OUTPUT:
+	RETVAL
+
+Utf8String
+name(self)
+	MLA_Folder	self
+   CODE:
+	RETVAL = self->name;
+   OUTPUT:
+	RETVAL
+
+MLA_Folder
+sibling(self)
+	MLA_Folder	self
+   CODE:
+	RETVAL = self->sibling;
+   OUTPUT:
+	RETVAL
+
+MLA_Folder
+child(self)
+	MLA_Folder	self
+   CODE:
+	RETVAL = self->child;
+   OUTPUT:
+	RETVAL
 
 MODULE = Media::LibMTP::API  PACKAGE = Media::LibMTP::API::Folder  PREFIX = LIBMTP_
 
@@ -688,7 +736,7 @@ new(class)
    CODE:
 	RETVAL = LIBMTP_new_playlist_t();
    OUTPUT:
- 	RETVAL
+	RETVAL
 
 
 #--------------------------------------------------------------------
@@ -706,4 +754,4 @@ new(class)
    CODE:
 	RETVAL = LIBMTP_new_track_t();
    OUTPUT:
- 	RETVAL
+	RETVAL
