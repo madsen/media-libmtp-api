@@ -586,15 +586,21 @@ LIBMTP_Send_Representative_Sample(self, arg1, arg2)
 	uint32_t		arg1
 	MLA_FileSampleData	arg2
 
+#// FIXME implement callback
+int
+LIBMTP_Send_Track_From_File(device, path, metadata)
+#//LIBMTP_Send_Track_From_File(device, path, metadata, callback, data)
+	MLA_MTPDevice	device
+	Utf8String	path
+	MLA_Track	metadata
+#//	void *		callback
+#//	void const *	data
+   CODE:
+	RETVAL = LIBMTP_Send_Track_From_File(device, path, metadata, NULL, NULL);
+   OUTPUT:
+	RETVAL
+
 #// FIXME
-#// int
-#// LIBMTP_Send_Track_From_File(self, arg1, arg2, arg3, arg4)
-#// 	MLA_MTPDevice	self
-#// 	char const *	arg1
-#// 	MLA_Track	arg2
-#// 	void *		arg3
-#// 	void const *	arg4
-#//
 #// int
 #// LIBMTP_Send_Track_From_File_Descriptor(self, arg1, arg2, arg3, arg4)
 #// 	MLA_MTPDevice	self
