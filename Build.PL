@@ -1,14 +1,23 @@
 #! /usr/bin/perl
 #---------------------------------------------------------------------
 
+use strict;
+use warnings;
+use 5.010;
+
 use Module::Build;
 use ExtUtils::PkgConfig;
 
+say 'Looking for installed libmtp with pkg-config...';
 my %libmtp = eval { ExtUtils::PkgConfig->find('libmtp') };
-exit 0 unless %libmtp;        # bail out if no libmtp
+unless (%libmtp) {
+  say 'It looks like you need to install libmtp first:'.
+      '  http://libmtp.sourceforge.net/';
+  exit 0;        # bail out if no libmtp
+}
 
 if (eval {require ExtUtils::Constant; 1}) {
-  print "Regenerating constants...\n";
+  say 'Regenerating constants...';
   require 'lib/Media/LibMTP/API/Constants.pm';
 
   my @names = (
@@ -27,7 +36,7 @@ if (eval {require ExtUtils::Constant; 1}) {
 my $build = Module::Build->new(
   dist_name            => 'Media-LibMTP-API',
   dist_version_from    => 'lib/Media/LibMTP/API.pm',
-  dist_abstract        => 'Low-level interface to LibMTP',
+  dist_abstract        => 'Low-level interface to libmtp',
   dist_author          => 'Christopher J. Madsen <perl@cjmweb.net>',
   module_name          => 'Media::LibMTP::API', # for packlist
   extra_compiler_flags => $libmtp{cflags},
