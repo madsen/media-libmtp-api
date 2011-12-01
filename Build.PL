@@ -12,7 +12,7 @@ if (eval {require ExtUtils::Constant; 1}) {
   require 'lib/Media/LibMTP/API/Constants.pm';
 
   my @names = (
-    map { /LIBMTP_DEBUG_/ ? $_ : { name => $_, macro => '1' } }
+    map { /LIBMTP_(?:DEBUG|STORAGE)_/ ? $_ : { name => $_, macro => '1' } }
     @{ $Media::LibMTP::API::EXPORT_TAGS{all} }
   );
   ExtUtils::Constant::WriteConstants(

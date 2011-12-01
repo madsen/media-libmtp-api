@@ -1234,7 +1234,7 @@ constant_30 (pTHX_ const char *name, IV *iv_return) {
      LIBMTP_PROPERTY_LanguageLocale LIBMTP_PROPERTY_ObjectBookmark
      LIBMTP_PROPERTY_ObjectFileName LIBMTP_PROPERTY_OriginLocation
      LIBMTP_PROPERTY_ParentalRating LIBMTP_PROPERTY_SubDescription
-     LIBMTP_PROPERTY_URLDestination */
+     LIBMTP_PROPERTY_URLDestination LIBMTP_STORAGE_SORTBY_MAXSPACE */
   /* Offset 22 gives the best switch position.  */
   switch (name[22]) {
   case 'A':
@@ -1268,6 +1268,17 @@ constant_30 (pTHX_ const char *name, IV *iv_return) {
     /*                                     ^              */
       *iv_return = LIBMTP_PROPERTY_OriginLocation;
       return PERL_constant_ISIV;
+    }
+    break;
+  case 'M':
+    if (memEQ(name, "LIBMTP_STORAGE_SORTBY_MAXSPACE", 30)) {
+    /*                                     ^              */
+#ifdef LIBMTP_STORAGE_SORTBY_MAXSPACE
+      *iv_return = LIBMTP_STORAGE_SORTBY_MAXSPACE;
+      return PERL_constant_ISIV;
+#else
+      return PERL_constant_NOTDEF;
+#endif
     }
     break;
   case 'a':
@@ -1333,54 +1344,75 @@ constant_31 (pTHX_ const char *name, IV *iv_return) {
      LIBMTP_ERROR_NO_DEVICE_ATTACHED LIBMTP_PROPERTY_ActivityEndTime
      LIBMTP_PROPERTY_AssociationDesc LIBMTP_PROPERTY_AssociationType
      LIBMTP_PROPERTY_EffectiveRating LIBMTP_PROPERTY_EncodingProfile
-     LIBMTP_PROPERTY_EncodingQuality */
-  /* Offset 29 gives the best switch position.  */
-  switch (name[29]) {
+     LIBMTP_PROPERTY_EncodingQuality LIBMTP_STORAGE_SORTBY_FREESPACE
+     LIBMTP_STORAGE_SORTBY_NOTSORTED */
+  /* Offset 25 gives the best switch position.  */
+  switch (name[25]) {
   case 'E':
-    if (memEQ(name, "LIBMTP_ERROR_NO_DEVICE_ATTACHED", 31)) {
-    /*                                            ^        */
-      *iv_return = LIBMTP_ERROR_NO_DEVICE_ATTACHED;
+    if (memEQ(name, "LIBMTP_STORAGE_SORTBY_FREESPACE", 31)) {
+    /*                                        ^            */
+#ifdef LIBMTP_STORAGE_SORTBY_FREESPACE
+      *iv_return = LIBMTP_STORAGE_SORTBY_FREESPACE;
       return PERL_constant_ISIV;
+#else
+      return PERL_constant_NOTDEF;
+#endif
     }
     break;
-  case 'l':
-    if (memEQ(name, "LIBMTP_PROPERTY_EncodingProfile", 31)) {
-    /*                                            ^        */
-      *iv_return = LIBMTP_PROPERTY_EncodingProfile;
-      return PERL_constant_ISIV;
-    }
-    break;
-  case 'm':
-    if (memEQ(name, "LIBMTP_PROPERTY_ActivityEndTime", 31)) {
-    /*                                            ^        */
-      *iv_return = LIBMTP_PROPERTY_ActivityEndTime;
-      return PERL_constant_ISIV;
-    }
-    break;
-  case 'n':
+  case 'R':
     if (memEQ(name, "LIBMTP_PROPERTY_EffectiveRating", 31)) {
-    /*                                            ^        */
+    /*                                        ^            */
       *iv_return = LIBMTP_PROPERTY_EffectiveRating;
       return PERL_constant_ISIV;
     }
     break;
-  case 'p':
+  case 'S':
+    if (memEQ(name, "LIBMTP_STORAGE_SORTBY_NOTSORTED", 31)) {
+    /*                                        ^            */
+#ifdef LIBMTP_STORAGE_SORTBY_NOTSORTED
+      *iv_return = LIBMTP_STORAGE_SORTBY_NOTSORTED;
+      return PERL_constant_ISIV;
+#else
+      return PERL_constant_NOTDEF;
+#endif
+    }
+    break;
+  case 'T':
+    if (memEQ(name, "LIBMTP_ERROR_NO_DEVICE_ATTACHED", 31)) {
+    /*                                        ^            */
+      *iv_return = LIBMTP_ERROR_NO_DEVICE_ATTACHED;
+      return PERL_constant_ISIV;
+    }
+    break;
+  case 'n':
+    if (memEQ(name, "LIBMTP_PROPERTY_ActivityEndTime", 31)) {
+    /*                                        ^            */
+      *iv_return = LIBMTP_PROPERTY_ActivityEndTime;
+      return PERL_constant_ISIV;
+    }
+    break;
+  case 'o':
+    if (memEQ(name, "LIBMTP_PROPERTY_AssociationDesc", 31)) {
+    /*                                        ^            */
+      *iv_return = LIBMTP_PROPERTY_AssociationDesc;
+      return PERL_constant_ISIV;
+    }
     if (memEQ(name, "LIBMTP_PROPERTY_AssociationType", 31)) {
-    /*                                            ^        */
+    /*                                        ^            */
       *iv_return = LIBMTP_PROPERTY_AssociationType;
       return PERL_constant_ISIV;
     }
     break;
-  case 's':
-    if (memEQ(name, "LIBMTP_PROPERTY_AssociationDesc", 31)) {
-    /*                                            ^        */
-      *iv_return = LIBMTP_PROPERTY_AssociationDesc;
+  case 'r':
+    if (memEQ(name, "LIBMTP_PROPERTY_EncodingProfile", 31)) {
+    /*                                        ^            */
+      *iv_return = LIBMTP_PROPERTY_EncodingProfile;
       return PERL_constant_ISIV;
     }
     break;
-  case 't':
+  case 'u':
     if (memEQ(name, "LIBMTP_PROPERTY_EncodingQuality", 31)) {
-    /*                                            ^        */
+    /*                                        ^            */
       *iv_return = LIBMTP_PROPERTY_EncodingQuality;
       return PERL_constant_ISIV;
     }
@@ -1931,7 +1963,9 @@ use ExtUtils::Constant qw (constant_types C_constant XS_constant);
 
 my $types = {map {($_, 1)} qw(IV)};
 my @names = (qw(LIBMTP_DEBUG_ALL LIBMTP_DEBUG_DATA LIBMTP_DEBUG_NONE
-	       LIBMTP_DEBUG_PLST LIBMTP_DEBUG_PTP LIBMTP_DEBUG_USB),
+	       LIBMTP_DEBUG_PLST LIBMTP_DEBUG_PTP LIBMTP_DEBUG_USB
+	       LIBMTP_STORAGE_SORTBY_FREESPACE LIBMTP_STORAGE_SORTBY_MAXSPACE
+	       LIBMTP_STORAGE_SORTBY_NOTSORTED),
             {name=>"LIBMTP_DATATYPE_INT16", type=>"IV", macro=>"1"},
             {name=>"LIBMTP_DATATYPE_INT32", type=>"IV", macro=>"1"},
             {name=>"LIBMTP_DATATYPE_INT64", type=>"IV", macro=>"1"},
