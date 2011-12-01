@@ -471,6 +471,14 @@ LIBMTP_Get_Syncpartner(self)
 #// 	void *		arg4
 #// 	void const *	arg5
 
+MLA_TrackList
+LIBMTP_Get_Tracklisting(self)
+	MLA_MTPDevice	self
+   CODE:
+	RETVAL = LIBMTP_Get_Tracklisting_With_Callback(self, NULL, NULL);
+   OUTPUT:
+	RETVAL
+
 #// FIXME
 #// MLA_Track
 #// LIBMTP_Get_Tracklisting_With_Callback(self, arg1, arg2)
