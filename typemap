@@ -50,7 +50,7 @@ T_PV_UTF8_FREE
 	if ($var) {
 	  sv_setpv((SV*)$arg, $var);
 	  SvUTF8_on((SV*)$arg);
-	  free($var);
+	  Safefree($var);
 	} else {
 	  SvOK_off((SV*)$arg); /* Undef */
 	}

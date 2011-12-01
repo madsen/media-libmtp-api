@@ -46,10 +46,9 @@ sub process_struct
         m!^\s*(\w+\b(?:\s*\*)?)\s*(\w+);\s*/\*\*<\s*(.+?)\s*\*/!
         or die "Bad line $.:$_";
 
-    $type = "MLA_\u$1"   if $type =~ /^LIBMTP_(\w+)_t\s*\*$/;
-    $type = 'Utf8String' if $type =~ /^char\s*\*$/;
-
-    print <<"";
+    if ($type =~ /^LIBMTP_(\w+)_t\s*\*$/) {
+      $type = "MLA_\u$1";
+      print <<"END READ-ONLY";
 $type
 $field(self)
 	$struct	self
@@ -57,7 +56,27 @@ $field(self)
 	RETVAL = self->$field;
    OUTPUT:
 	RETVAL\n
+END READ-ONLY
+    } else {
+      my $newValue = 'newValue';
 
+      if ($type =~ /^char\s*\*$/) {
+        $type = 'Utf8String';
+        $newValue = "strdup($newValue)";
+      }
+
+      print <<"END READ-WRITE";
+$type
+$field(self, newValue = NO_INIT)
+	$struct	self
+	$type	newValue
+   CODE:
+	if (items > 1)
+	  self->$field = $newValue;
+	RETVAL = self->$field;
+   OUTPUT:
+	RETVAL\n
+END READ-WRITE
+    } # end else read-write accessor
   } # end while <$in>
-
 } # end process_type

@@ -91,73 +91,107 @@ new(class)
 	RETVAL
 
 uint32_t
-album_id(self)
+album_id(self, newValue = NO_INIT)
 	MLA_Album	self
+	uint32_t	newValue
    CODE:
+	if (items > 1)
+	  self->album_id = newValue;
 	RETVAL = self->album_id;
    OUTPUT:
 	RETVAL
 
 uint32_t
-parent_id(self)
+parent_id(self, newValue = NO_INIT)
 	MLA_Album	self
+	uint32_t	newValue
    CODE:
+	if (items > 1)
+	  self->parent_id = newValue;
 	RETVAL = self->parent_id;
    OUTPUT:
 	RETVAL
 
 uint32_t
-storage_id(self)
+storage_id(self, newValue = NO_INIT)
 	MLA_Album	self
+	uint32_t	newValue
    CODE:
+	if (items > 1)
+	  self->storage_id = newValue;
 	RETVAL = self->storage_id;
    OUTPUT:
 	RETVAL
 
 Utf8String
-name(self)
+name(self, newValue = NO_INIT)
 	MLA_Album	self
+	Utf8String	newValue
    CODE:
+	if (items > 1)
+	  self->name = strdup(newValue);
 	RETVAL = self->name;
    OUTPUT:
 	RETVAL
 
 Utf8String
-artist(self)
+artist(self, newValue = NO_INIT)
 	MLA_Album	self
+	Utf8String	newValue
    CODE:
+	if (items > 1)
+	  self->artist = strdup(newValue);
 	RETVAL = self->artist;
    OUTPUT:
 	RETVAL
 
 Utf8String
-composer(self)
+composer(self, newValue = NO_INIT)
 	MLA_Album	self
+	Utf8String	newValue
    CODE:
+	if (items > 1)
+	  self->composer = strdup(newValue);
 	RETVAL = self->composer;
    OUTPUT:
 	RETVAL
 
 Utf8String
-genre(self)
+genre(self, newValue = NO_INIT)
 	MLA_Album	self
+	Utf8String	newValue
    CODE:
+	if (items > 1)
+	  self->genre = strdup(newValue);
 	RETVAL = self->genre;
    OUTPUT:
 	RETVAL
 
-uint32_t *
-tracks(self)
+AV *
+tracks(self, newValue = NO_INIT)
 	MLA_Album	self
+	AV *		newValue
    PREINIT:
-	uint32_t size_RETVAL;
+	I32		i;
    CODE:
-	size_RETVAL = self->no_tracks;
-	RETVAL = self->tracks;
+        if (items > 1) {
+          if (self->tracks) Safefree(self->tracks);
+          i = av_len(newValue);
+          self->no_tracks = i + 1;
+          Newx(self->tracks, self->no_tracks, uint32_t);
+          for (; i >= 0; --i) {
+            self->tracks[i] =
+              SvUV(*av_fetch(newValue, i, 0));
+          }
+        }
+	RETVAL = newAV();
+	sv_2mortal((SV*)RETVAL);
+	av_extend(RETVAL, self->no_tracks - 1);
+        for (i = 0; i < self->no_tracks; ++i) {
+          av_store(RETVAL, i, newSVuv(self->tracks[i]));
+        }
    OUTPUT:
 	RETVAL
-   CLEANUP:
-	XSRETURN(size_RETVAL);
 
 uint32_t
 no_tracks(self)
@@ -174,6 +208,7 @@ next(self)
 	RETVAL = self->next;
    OUTPUT:
 	RETVAL
+
 
 #--------------------------------------------------------------------
 MODULE = Media::LibMTP::API  PACKAGE = Media::LibMTP::API::AlbumList
@@ -745,33 +780,45 @@ new(class)
 	RETVAL
 
 uint32_t
-folder_id(self)
+folder_id(self, newValue = NO_INIT)
 	MLA_Folder	self
+	uint32_t	newValue
    CODE:
+	if (items > 1)
+	  self->folder_id = newValue;
 	RETVAL = self->folder_id;
    OUTPUT:
 	RETVAL
 
 uint32_t
-parent_id(self)
+parent_id(self, newValue = NO_INIT)
 	MLA_Folder	self
+	uint32_t	newValue
    CODE:
+	if (items > 1)
+	  self->parent_id = newValue;
 	RETVAL = self->parent_id;
    OUTPUT:
 	RETVAL
 
 uint32_t
-storage_id(self)
+storage_id(self, newValue = NO_INIT)
 	MLA_Folder	self
+	uint32_t	newValue
    CODE:
+	if (items > 1)
+	  self->storage_id = newValue;
 	RETVAL = self->storage_id;
    OUTPUT:
 	RETVAL
 
 Utf8String
-name(self)
+name(self, newValue = NO_INIT)
 	MLA_Folder	self
+	Utf8String	newValue
    CODE:
+	if (items > 1)
+	  self->name = strdup(newValue);
 	RETVAL = self->name;
    OUTPUT:
 	RETVAL
