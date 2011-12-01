@@ -402,10 +402,10 @@ LIBMTP_Get_Playlist_List(self)
 	MLA_MTPDevice	self
 
 int
-LIBMTP_Get_Representative_Sample(self, arg1, arg2)
+LIBMTP_Get_Representative_Sample(self, object_id, data)
 	MLA_MTPDevice		self
-	uint32_t		arg1
-	MLA_FileSampleData	arg2
+	uint32_t		object_id
+	MLA_FileSampleData	data
 
 #// FIXME
 #// int
@@ -764,6 +764,78 @@ new(class)
 	SV *	class
    CODE:
 	RETVAL = LIBMTP_new_filesampledata_t();
+   OUTPUT:
+	RETVAL
+
+uint32_t
+width(self, newValue = NO_INIT)
+	MLA_FileSampleData	self
+	uint32_t		newValue
+   CODE:
+	if (items > 1)
+	  self->width = newValue;
+	RETVAL = self->width;
+   OUTPUT:
+	RETVAL
+
+uint32_t
+height(self, newValue = NO_INIT)
+	MLA_FileSampleData	self
+	uint32_t		newValue
+   CODE:
+	if (items > 1)
+	  self->height = newValue;
+	RETVAL = self->height;
+   OUTPUT:
+	RETVAL
+
+uint32_t
+duration(self, newValue = NO_INIT)
+	MLA_FileSampleData	self
+	uint32_t		newValue
+   CODE:
+	if (items > 1)
+	  self->duration = newValue;
+	RETVAL = self->duration;
+   OUTPUT:
+	RETVAL
+
+LIBMTP_filetype_t
+filetype(self, newValue = NO_INIT)
+	MLA_FileSampleData	self
+	LIBMTP_filetype_t	newValue
+   CODE:
+	if (items > 1)
+	  self->filetype = newValue;
+	RETVAL = self->filetype;
+   OUTPUT:
+	RETVAL
+
+uint64_t
+size(self)
+	MLA_FileSampleData	self
+   CODE:
+	RETVAL = self->size;
+   OUTPUT:
+	RETVAL
+
+SV *
+data(self, newValue = NO_INIT)
+	MLA_FileSampleData	self
+	SV *			newValue
+   PREINIT:
+	char *	data;
+        STRLEN  size;
+   CODE:
+	if (items > 1) {
+	  if (self->data) Safefree(self->data);
+	  data = SvPVbyte(newValue, size);
+	  Newx(self->data, size, char);
+	  Copy(data, self->data, size, char);
+	  self->size = size;
+	}
+	RETVAL = newSVpvn(self->data, self->size);
+	SvUTF8_off(RETVAL);
    OUTPUT:
 	RETVAL
 
