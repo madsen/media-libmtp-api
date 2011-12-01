@@ -749,6 +749,91 @@ new(class)
    OUTPUT:
 	RETVAL
 
+uint32_t
+item_id(self, newValue = NO_INIT)
+	MLA_File	self
+	uint32_t	newValue
+   CODE:
+	if (items > 1)
+	  self->item_id = newValue;
+	RETVAL = self->item_id;
+   OUTPUT:
+	RETVAL
+
+uint32_t
+parent_id(self, newValue = NO_INIT)
+	MLA_File	self
+	uint32_t	newValue
+   CODE:
+	if (items > 1)
+	  self->parent_id = newValue;
+	RETVAL = self->parent_id;
+   OUTPUT:
+	RETVAL
+
+uint32_t
+storage_id(self, newValue = NO_INIT)
+	MLA_File	self
+	uint32_t	newValue
+   CODE:
+	if (items > 1)
+	  self->storage_id = newValue;
+	RETVAL = self->storage_id;
+   OUTPUT:
+	RETVAL
+
+Utf8String
+filename(self, newValue = NO_INIT)
+	MLA_File	self
+	Utf8String	newValue
+   CODE:
+	if (items > 1)
+	  self->filename = strdup(newValue);
+	RETVAL = self->filename;
+   OUTPUT:
+	RETVAL
+
+uint64_t
+filesize(self, newValue = NO_INIT)
+	MLA_File	self
+	uint64_t	newValue
+   CODE:
+	if (items > 1)
+	  self->filesize = newValue;
+	RETVAL = self->filesize;
+   OUTPUT:
+	RETVAL
+
+time_t
+modificationdate(self, newValue = NO_INIT)
+	MLA_File	self
+	time_t		newValue
+   CODE:
+	if (items > 1)
+	  self->modificationdate = newValue;
+	RETVAL = self->modificationdate;
+   OUTPUT:
+	RETVAL
+
+LIBMTP_filetype_t
+filetype(self, newValue = NO_INIT)
+	MLA_File		self
+	LIBMTP_filetype_t	newValue
+   CODE:
+	if (items > 1)
+	  self->filetype = newValue;
+	RETVAL = self->filetype;
+   OUTPUT:
+	RETVAL
+
+MLA_File
+next(self)
+	MLA_File	self
+   CODE:
+	RETVAL = self->next;
+   OUTPUT:
+	RETVAL
+
 
 #--------------------------------------------------------------------
 MODULE = Media::LibMTP::API  PACKAGE = Media::LibMTP::API::FileSampleData
@@ -946,6 +1031,92 @@ new(class)
    OUTPUT:
 	RETVAL
 
+uint32_t
+playlist_id(self, newValue = NO_INIT)
+	MLA_Playlist	self
+	uint32_t	newValue
+   CODE:
+	if (items > 1)
+	  self->playlist_id = newValue;
+	RETVAL = self->playlist_id;
+   OUTPUT:
+	RETVAL
+
+uint32_t
+parent_id(self, newValue = NO_INIT)
+	MLA_Playlist	self
+	uint32_t	newValue
+   CODE:
+	if (items > 1)
+	  self->parent_id = newValue;
+	RETVAL = self->parent_id;
+   OUTPUT:
+	RETVAL
+
+uint32_t
+storage_id(self, newValue = NO_INIT)
+	MLA_Playlist	self
+	uint32_t	newValue
+   CODE:
+	if (items > 1)
+	  self->storage_id = newValue;
+	RETVAL = self->storage_id;
+   OUTPUT:
+	RETVAL
+
+Utf8String
+name(self, newValue = NO_INIT)
+	MLA_Playlist	self
+	Utf8String	newValue
+   CODE:
+	if (items > 1)
+	  self->name = strdup(newValue);
+	RETVAL = self->name;
+   OUTPUT:
+	RETVAL
+
+AV *
+tracks(self, newValue = NO_INIT)
+	MLA_Playlist	self
+	AV *		newValue
+   PREINIT:
+	I32		i;
+   CODE:
+        if (items > 1) {
+          if (self->tracks) Safefree(self->tracks);
+          i = av_len(newValue);
+          self->no_tracks = i + 1;
+          Newx(self->tracks, self->no_tracks, uint32_t);
+          for (; i >= 0; --i) {
+            self->tracks[i] =
+              SvUV(*av_fetch(newValue, i, 0));
+          }
+        }
+	RETVAL = newAV();
+	sv_2mortal((SV*)RETVAL);
+	av_extend(RETVAL, self->no_tracks - 1);
+        for (i = 0; i < self->no_tracks; ++i) {
+          av_store(RETVAL, i, newSVuv(self->tracks[i]));
+        }
+   OUTPUT:
+	RETVAL
+
+uint32_t
+no_tracks(self)
+	MLA_Playlist	self
+   CODE:
+	RETVAL = self->no_tracks;
+   OUTPUT:
+	RETVAL
+
+MLA_Playlist
+next(self)
+	MLA_Playlist	self
+   CODE:
+	RETVAL = self->next;
+   OUTPUT:
+	RETVAL
+
 
 #--------------------------------------------------------------------
 MODULE = Media::LibMTP::API  PACKAGE = Media::LibMTP::API::Track
@@ -963,3 +1134,254 @@ new(class)
 	RETVAL = LIBMTP_new_track_t();
    OUTPUT:
 	RETVAL
+
+uint32_t
+item_id(self, newValue = NO_INIT)
+	MLA_Track	self
+	uint32_t	newValue
+   CODE:
+	if (items > 1)
+	  self->item_id = newValue;
+	RETVAL = self->item_id;
+   OUTPUT:
+	RETVAL
+
+uint32_t
+parent_id(self, newValue = NO_INIT)
+	MLA_Track	self
+	uint32_t	newValue
+   CODE:
+	if (items > 1)
+	  self->parent_id = newValue;
+	RETVAL = self->parent_id;
+   OUTPUT:
+	RETVAL
+
+uint32_t
+storage_id(self, newValue = NO_INIT)
+	MLA_Track	self
+	uint32_t	newValue
+   CODE:
+	if (items > 1)
+	  self->storage_id = newValue;
+	RETVAL = self->storage_id;
+   OUTPUT:
+	RETVAL
+
+Utf8String
+title(self, newValue = NO_INIT)
+	MLA_Track	self
+	Utf8String	newValue
+   CODE:
+	if (items > 1)
+	  self->title = strdup(newValue);
+	RETVAL = self->title;
+   OUTPUT:
+	RETVAL
+
+Utf8String
+artist(self, newValue = NO_INIT)
+	MLA_Track	self
+	Utf8String	newValue
+   CODE:
+	if (items > 1)
+	  self->artist = strdup(newValue);
+	RETVAL = self->artist;
+   OUTPUT:
+	RETVAL
+
+Utf8String
+composer(self, newValue = NO_INIT)
+	MLA_Track	self
+	Utf8String	newValue
+   CODE:
+	if (items > 1)
+	  self->composer = strdup(newValue);
+	RETVAL = self->composer;
+   OUTPUT:
+	RETVAL
+
+Utf8String
+genre(self, newValue = NO_INIT)
+	MLA_Track	self
+	Utf8String	newValue
+   CODE:
+	if (items > 1)
+	  self->genre = strdup(newValue);
+	RETVAL = self->genre;
+   OUTPUT:
+	RETVAL
+
+Utf8String
+album(self, newValue = NO_INIT)
+	MLA_Track	self
+	Utf8String	newValue
+   CODE:
+	if (items > 1)
+	  self->album = strdup(newValue);
+	RETVAL = self->album;
+   OUTPUT:
+	RETVAL
+
+Utf8String
+date(self, newValue = NO_INIT)
+	MLA_Track	self
+	Utf8String	newValue
+   CODE:
+	if (items > 1)
+	  self->date = strdup(newValue);
+	RETVAL = self->date;
+   OUTPUT:
+	RETVAL
+
+Utf8String
+filename(self, newValue = NO_INIT)
+	MLA_Track	self
+	Utf8String	newValue
+   CODE:
+	if (items > 1)
+	  self->filename = strdup(newValue);
+	RETVAL = self->filename;
+   OUTPUT:
+	RETVAL
+
+uint16_t
+tracknumber(self, newValue = NO_INIT)
+	MLA_Track	self
+	uint16_t	newValue
+   CODE:
+	if (items > 1)
+	  self->tracknumber = newValue;
+	RETVAL = self->tracknumber;
+   OUTPUT:
+	RETVAL
+
+uint32_t
+duration(self, newValue = NO_INIT)
+	MLA_Track	self
+	uint32_t	newValue
+   CODE:
+	if (items > 1)
+	  self->duration = newValue;
+	RETVAL = self->duration;
+   OUTPUT:
+	RETVAL
+
+uint32_t
+samplerate(self, newValue = NO_INIT)
+	MLA_Track	self
+	uint32_t	newValue
+   CODE:
+	if (items > 1)
+	  self->samplerate = newValue;
+	RETVAL = self->samplerate;
+   OUTPUT:
+	RETVAL
+
+uint16_t
+nochannels(self, newValue = NO_INIT)
+	MLA_Track	self
+	uint16_t	newValue
+   CODE:
+	if (items > 1)
+	  self->nochannels = newValue;
+	RETVAL = self->nochannels;
+   OUTPUT:
+	RETVAL
+
+uint32_t
+wavecodec(self, newValue = NO_INIT)
+	MLA_Track	self
+	uint32_t	newValue
+   CODE:
+	if (items > 1)
+	  self->wavecodec = newValue;
+	RETVAL = self->wavecodec;
+   OUTPUT:
+	RETVAL
+
+uint32_t
+bitrate(self, newValue = NO_INIT)
+	MLA_Track	self
+	uint32_t	newValue
+   CODE:
+	if (items > 1)
+	  self->bitrate = newValue;
+	RETVAL = self->bitrate;
+   OUTPUT:
+	RETVAL
+
+uint16_t
+bitratetype(self, newValue = NO_INIT)
+	MLA_Track	self
+	uint16_t	newValue
+   CODE:
+	if (items > 1)
+	  self->bitratetype = newValue;
+	RETVAL = self->bitratetype;
+   OUTPUT:
+	RETVAL
+
+uint16_t
+rating(self, newValue = NO_INIT)
+	MLA_Track	self
+	uint16_t	newValue
+   CODE:
+	if (items > 1)
+	  self->rating = newValue;
+	RETVAL = self->rating;
+   OUTPUT:
+	RETVAL
+
+uint32_t
+usecount(self, newValue = NO_INIT)
+	MLA_Track	self
+	uint32_t	newValue
+   CODE:
+	if (items > 1)
+	  self->usecount = newValue;
+	RETVAL = self->usecount;
+   OUTPUT:
+	RETVAL
+
+uint64_t
+filesize(self, newValue = NO_INIT)
+	MLA_Track	self
+	uint64_t	newValue
+   CODE:
+	if (items > 1)
+	  self->filesize = newValue;
+	RETVAL = self->filesize;
+   OUTPUT:
+	RETVAL
+
+time_t
+modificationdate(self, newValue = NO_INIT)
+	MLA_Track	self
+	time_t	newValue
+   CODE:
+	if (items > 1)
+	  self->modificationdate = newValue;
+	RETVAL = self->modificationdate;
+   OUTPUT:
+	RETVAL
+
+LIBMTP_filetype_t
+filetype(self, newValue = NO_INIT)
+	MLA_Track	self
+	LIBMTP_filetype_t	newValue
+   CODE:
+	if (items > 1)
+	  self->filetype = newValue;
+	RETVAL = self->filetype;
+   OUTPUT:
+	RETVAL
+
+MLA_Track
+next(self)
+	MLA_Track	self
+   CODE:
+	RETVAL = self->next;
+   OUTPUT:
+	RETVAL
+
