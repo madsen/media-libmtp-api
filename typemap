@@ -3,13 +3,16 @@ MLA_AlbumList					T_PTROBJ_LIBMTP
 MLA_AllowedValues				T_PTROBJ_LIBMTP
 MLA_Error					T_PTROBJ_LIBMTP
 MLA_File					T_PTROBJ_LIBMTP
+MLA_FileList					T_PTROBJ_LIBMTP
 MLA_FileSampleData				T_PTROBJ_LIBMTP
 MLA_Folder					T_PTROBJ_LIBMTP
 MLA_FolderList					T_PTROBJ_LIBMTP
 MLA_MTPDevice					T_PTROBJ_LIBMTP
 MLA_Playlist					T_PTROBJ_LIBMTP
+MLA_PlaylistList				T_PTROBJ_LIBMTP
 MLA_RawDevice					T_PTROBJ_LIBMTP
 MLA_Track					T_PTROBJ_LIBMTP
+MLA_TrackList					T_PTROBJ_LIBMTP
 
 Utf8String					T_PV_UTF8
 Utf8StringConst					T_PV_UTF8

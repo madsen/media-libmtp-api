@@ -7,17 +7,20 @@
 #include <libmtp.h>
 
 typedef LIBMTP_album_t *           MLA_Album;
-typedef LIBMTP_album_t *           MLA_AlbumList; /* needs DESTROY */
+typedef LIBMTP_album_t *           MLA_AlbumList;   /* needs DESTROY */
 typedef LIBMTP_allowed_values_t *  MLA_AllowedValues;
 typedef LIBMTP_file_t *            MLA_File;
+typedef LIBMTP_file_t *            MLA_FileList;    /* needs DESTROY */
 typedef LIBMTP_filesampledata_t *  MLA_FileSampleData;
 typedef LIBMTP_error_t *           MLA_Error;
 typedef LIBMTP_folder_t *          MLA_Folder;
-typedef LIBMTP_folder_t *          MLA_FolderList; /* needs DESTROY */
+typedef LIBMTP_folder_t *          MLA_FolderList;  /* needs DESTROY */
 typedef LIBMTP_mtpdevice_t *       MLA_MTPDevice;
 typedef LIBMTP_playlist_t *        MLA_Playlist;
+typedef LIBMTP_playlist_t *        MLA_PlaylistList;/* needs DESTROY */
 typedef LIBMTP_raw_device_t *      MLA_RawDevice;
 typedef LIBMTP_track_t *           MLA_Track;
+typedef LIBMTP_track_t *           MLA_TrackList;   /* needs DESTROY */
 
 typedef const char *               Utf8StringConst;
 typedef char *                     Utf8String;
@@ -349,10 +352,6 @@ LIBMTP_Get_Errorstack(self)
 #// 	void *		arg4
 #// 	void const *	arg5
 
-MLA_File
-LIBMTP_Get_Filelisting(self)
-	MLA_MTPDevice	self
-
 #//FIXME
 #// MLA_File
 #// LIBMTP_Get_Filelisting_With_Callback(self, arg1, arg2)
@@ -360,12 +359,12 @@ LIBMTP_Get_Filelisting(self)
 #// 	void *		arg1
 #// 	void const *	arg2
 
-MLA_File
+MLA_FileList
 LIBMTP_Get_Filemetadata(self, arg1)
 	MLA_MTPDevice	self
 	uint32_t	arg1
 
-MLA_File
+MLA_FileList
 LIBMTP_Get_Files_And_Folders(self, arg1, arg2)
 	MLA_MTPDevice	self
 	uint32_t	arg1
@@ -392,12 +391,12 @@ Utf8String2Free
 LIBMTP_Get_Modelname(self)
 	MLA_MTPDevice	self
 
-MLA_Playlist
+MLA_PlaylistList
 LIBMTP_Get_Playlist(self, arg1)
 	MLA_MTPDevice	self
 	uint32_t	arg1
 
-MLA_Playlist
+MLA_PlaylistList
 LIBMTP_Get_Playlist_List(self)
 	MLA_MTPDevice	self
 
@@ -472,10 +471,6 @@ LIBMTP_Get_Syncpartner(self)
 #// 	void *		arg4
 #// 	void const *	arg5
 
-MLA_Track
-LIBMTP_Get_Tracklisting(self)
-	MLA_MTPDevice	self
-
 #// FIXME
 #// MLA_Track
 #// LIBMTP_Get_Tracklisting_With_Callback(self, arg1, arg2)
@@ -490,7 +485,7 @@ LIBMTP_Get_Tracklisting(self)
 #// 	void *		arg2
 #// 	void const *	arg3
 
-MLA_Track
+MLA_TrackList
 LIBMTP_Get_Trackmetadata(self, arg1)
 	MLA_MTPDevice	self
 	uint32_t	arg1
@@ -633,12 +628,6 @@ LIBMTP_Set_Friendlyname(self, arg1)
 	Utf8String	arg1
 
 int
-LIBMTP_Set_Object_Filename(self, arg1, arg2)
-	MLA_MTPDevice	self
-	uint32_t	arg1
-	Utf8String	arg2
-
-int
 LIBMTP_Set_Object_String(self, arg1, arg2, arg3)
 	MLA_MTPDevice		self
 	uint32_t		arg1
@@ -735,13 +724,7 @@ next(self)
 #--------------------------------------------------------------------
 MODULE = Media::LibMTP::API  PACKAGE = Media::LibMTP::API::File
 
-void
-DESTROY(self)
-	MLA_File	self
-   CODE:
-	LIBMTP_destroy_file_t(self);
-
-MLA_File
+MLA_FileList
 new(class)
 	SV *	class
    CODE:
@@ -833,6 +816,16 @@ next(self)
 	RETVAL = self->next;
    OUTPUT:
 	RETVAL
+
+
+#--------------------------------------------------------------------
+MODULE = Media::LibMTP::API  PACKAGE = Media::LibMTP::API::FileList
+
+void
+DESTROY(self)
+	MLA_File	self
+   CODE:
+	LIBMTP_destroy_file_t(self);
 
 
 #--------------------------------------------------------------------
@@ -1017,13 +1010,7 @@ DESTROY(self)
 #--------------------------------------------------------------------
 MODULE = Media::LibMTP::API  PACKAGE = Media::LibMTP::API::Playlist
 
-void
-DESTROY(self)
-	MLA_Playlist	self
-   CODE:
-	LIBMTP_destroy_playlist_t(self);
-
-MLA_Playlist
+MLA_PlaylistList
 new(class)
 	SV *	class
    CODE:
@@ -1119,15 +1106,19 @@ next(self)
 
 
 #--------------------------------------------------------------------
-MODULE = Media::LibMTP::API  PACKAGE = Media::LibMTP::API::Track
+MODULE = Media::LibMTP::API  PACKAGE = Media::LibMTP::API::PlaylistList
 
 void
 DESTROY(self)
-	MLA_Track	self
+	MLA_Playlist	self
    CODE:
-	LIBMTP_destroy_track_t(self);
+	LIBMTP_destroy_playlist_t(self);
 
-MLA_Track
+
+#--------------------------------------------------------------------
+MODULE = Media::LibMTP::API  PACKAGE = Media::LibMTP::API::Track
+
+MLA_TrackList
 new(class)
 	SV *	class
    CODE:
@@ -1385,3 +1376,12 @@ next(self)
    OUTPUT:
 	RETVAL
 
+
+#--------------------------------------------------------------------
+MODULE = Media::LibMTP::API  PACKAGE = Media::LibMTP::API::TrackList
+
+void
+DESTROY(self)
+	MLA_Track	self
+   CODE:
+	LIBMTP_destroy_track_t(self);

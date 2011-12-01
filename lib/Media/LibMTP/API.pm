@@ -77,15 +77,30 @@ sub import
   goto &Exporter::import;
 } # end import
 
+#---------------------------------------------------------------------
+# Set up inheritance:
 {
   package Media::LibMTP::API::AlbumList;
   our @ISA = ('Media::LibMTP::API::Album');
 }
 {
+  package Media::LibMTP::API::FileList;
+  our @ISA = ('Media::LibMTP::API::File');
+}
+{
   package Media::LibMTP::API::FolderList;
   our @ISA = ('Media::LibMTP::API::Folder');
 }
+{
+  package Media::LibMTP::API::PlaylistList;
+  our @ISA = ('Media::LibMTP::API::Playlist');
+}
+{
+  package Media::LibMTP::API::TrackList;
+  our @ISA = ('Media::LibMTP::API::Track');
+}
 
+#---------------------------------------------------------------------
 require XSLoader;
 XSLoader::load('Media::LibMTP::API', $VERSION);
 
