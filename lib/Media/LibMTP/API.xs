@@ -406,12 +406,19 @@ LIBMTP_Get_Representative_Sample(self, object_id, data)
 	uint32_t		object_id
 	MLA_FileSampleData	data
 
-#// FIXME
-#// int
-#// LIBMTP_Get_Representative_Sample_Format(self, arg1, arg2)
-#// 	MLA_MTPDevice		self
-#// 	LIBMTP_filetype_t	arg1
-#// 	MLA_FileSampleData*	arg2
+int
+LIBMTP_Get_Representative_Sample_Format(self, filetype, sample)
+	MLA_MTPDevice		self
+	LIBMTP_filetype_t	filetype
+	MLA_FileSampleData	sample = NO_INIT
+   CODE:
+	sample = NULL;
+	RETVAL = LIBMTP_Get_Representative_Sample_Format(
+	  self, filetype, &sample
+	);
+   OUTPUT:
+	RETVAL
+	sample
 
 #// FIXME
 #// int
