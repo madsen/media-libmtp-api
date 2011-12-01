@@ -25,11 +25,11 @@ if (eval {require ExtUtils::Constant; 1}) {
 } # end if ExtUtils::Constant available
 
 my $build = Module::Build->new(
-  dist_name            => 'Media-LibMTP',
-  dist_version_from    => 'lib/Media/LibMTP.pm',
-  dist_abstract        => 'Use LibMTP to access media players',
+  dist_name            => 'Media-LibMTP-API',
+  dist_version_from    => 'lib/Media/LibMTP/API.pm',
+  dist_abstract        => 'Low-level interface to LibMTP',
   dist_author          => 'Christopher J. Madsen <perl@cjmweb.net>',
-  module_name          => 'Media::LibMTP', # for packlist
+  module_name          => 'Media::LibMTP::API', # for packlist
   extra_compiler_flags => $libmtp{cflags},
   extra_linker_flags   => $libmtp{libs},
 ##{ $plugin->get_prereqs ##}

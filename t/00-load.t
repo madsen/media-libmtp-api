@@ -4,7 +4,7 @@
 use Test::More tests => 1;
 
 BEGIN {
-    use_ok('Media::LibMTP');
+    use_ok('Media::LibMTP::API');
 }
 
-diag("Testing Media::LibMTP $Media::LibMTP::VERSION");
+diag("Testing Media::LibMTP::API $Media::LibMTP::API::VERSION");

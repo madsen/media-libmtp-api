@@ -1,11 +1,11 @@
-Media-LibMTP
-============
+Media-LibMTP-API
+================
 
-Media-LibMTP is a Perl module that provides an interface to [LibMTP](http://libmtp.sourceforge.net), which is an Initiator implementation of the Media Transfer Protocol (MTP) in the form of a library suitable primarily for POSIX compliant operating systems.
+Media-LibMTP-API is a Perl module that provides a low-level interface to [LibMTP](http://libmtp.sourceforge.net), which is an Initiator implementation of the Media Transfer Protocol (MTP) in the form of a library suitable primarily for POSIX compliant operating systems.
 
-LibMTP is not included with Media-LibMTP; you must install it separately.
+LibMTP is not included with Media-LibMTP-API; you must install it separately.
 
-This is a Git repository where development of Media-LibMTP takes place.  For more information, visit [Media-LibMTP on CPAN](http://search.cpan.org/dist/Media-LibMTP/).
+This is a Git repository where development of Media-LibMTP-API takes place.  For more information, visit [Media-LibMTP-API on CPAN](http://search.cpan.org/dist/Media-LibMTP-API/).
 
 
 
