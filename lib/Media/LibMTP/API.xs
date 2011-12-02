@@ -16,6 +16,7 @@ typedef LIBMTP_error_t *           MLA_Error;
 typedef LIBMTP_folder_t *          MLA_Folder;
 typedef LIBMTP_folder_t *          MLA_FolderList;  /* needs DESTROY */
 typedef LIBMTP_mtpdevice_t *       MLA_MTPDevice;
+typedef LIBMTP_mtpdevice_t *       MLA_MTPDeviceList;/* needs DESTROY */
 typedef LIBMTP_playlist_t *        MLA_Playlist;
 typedef LIBMTP_playlist_t *        MLA_PlaylistList;/* needs DESTROY */
 typedef LIBMTP_raw_device_t *      MLA_RawDevice;
@@ -64,7 +65,7 @@ Utf8StringConst
 LIBMTP_Get_Filetype_Description(arg0)
 	LIBMTP_filetype_t	arg0
 
-MLA_MTPDevice
+MLA_MTPDeviceList
 LIBMTP_Get_First_Device()
 
 Utf8StringConst
@@ -576,11 +577,94 @@ u64vals(self)
 #--------------------------------------------------------------------
 MODULE = Media::LibMTP::API  PACKAGE = Media::LibMTP::API::MTPDevice
 
-void
-DESTROY(self)
+uint8_t
+object_bitsize(self)
 	MLA_MTPDevice	self
    CODE:
-	LIBMTP_Release_Device_List(self);
+	RETVAL = self->object_bitsize;
+   OUTPUT:
+	RETVAL
+
+uint8_t
+maximum_battery_level(self)
+	MLA_MTPDevice	self
+   CODE:
+	RETVAL = self->maximum_battery_level;
+   OUTPUT:
+	RETVAL
+
+uint32_t
+default_music_folder(self)
+	MLA_MTPDevice	self
+   CODE:
+	RETVAL = self->default_music_folder;
+   OUTPUT:
+	RETVAL
+
+uint32_t
+default_playlist_folder(self)
+	MLA_MTPDevice	self
+   CODE:
+	RETVAL = self->default_playlist_folder;
+   OUTPUT:
+	RETVAL
+
+uint32_t
+default_picture_folder(self)
+	MLA_MTPDevice	self
+   CODE:
+	RETVAL = self->default_picture_folder;
+   OUTPUT:
+	RETVAL
+
+uint32_t
+default_video_folder(self)
+	MLA_MTPDevice	self
+   CODE:
+	RETVAL = self->default_video_folder;
+   OUTPUT:
+	RETVAL
+
+uint32_t
+default_organizer_folder(self)
+	MLA_MTPDevice	self
+   CODE:
+	RETVAL = self->default_organizer_folder;
+   OUTPUT:
+	RETVAL
+
+uint32_t
+default_zencast_folder(self)
+	MLA_MTPDevice	self
+   CODE:
+	RETVAL = self->default_zencast_folder;
+   OUTPUT:
+	RETVAL
+
+uint32_t
+default_album_folder(self)
+	MLA_MTPDevice	self
+   CODE:
+	RETVAL = self->default_album_folder;
+   OUTPUT:
+	RETVAL
+
+uint32_t
+default_text_folder(self)
+	MLA_MTPDevice	self
+   CODE:
+	RETVAL = self->default_text_folder;
+   OUTPUT:
+	RETVAL
+
+MLA_MTPDevice
+next(self)
+	MLA_MTPDevice	self
+   CODE:
+	RETVAL = self->next;
+   OUTPUT:
+	RETVAL
+
 
 MODULE = Media::LibMTP::API  PACKAGE = Media::LibMTP::API::MTPDevice  PREFIX = LIBMTP_
 
@@ -1140,6 +1224,15 @@ LIBMTP_Update_Track_Metadata(self, arg1)
 
 
 #--------------------------------------------------------------------
+MODULE = Media::LibMTP::API  PACKAGE = Media::LibMTP::API::MTPDeviceList
+
+void
+DESTROY(self)
+	MLA_MTPDevice	self
+   CODE:
+	LIBMTP_Release_Device_List(self);
+
+#--------------------------------------------------------------------
 MODULE = Media::LibMTP::API  PACKAGE = Media::LibMTP::API::Error
 
 LIBMTP_error_number_t
@@ -1622,11 +1715,11 @@ devnum(self)
 
 MODULE = Media::LibMTP::API  PACKAGE = Media::LibMTP::API::RawDevice  PREFIX = LIBMTP_
 
-MLA_MTPDevice
+MLA_MTPDeviceList
 LIBMTP_Open_Raw_Device(self)
 	MLA_RawDevice	self
 
-MLA_MTPDevice
+MLA_MTPDeviceList
 LIBMTP_Open_Raw_Device_Uncached(self)
 	MLA_RawDevice	self
 

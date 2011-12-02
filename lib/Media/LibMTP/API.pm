@@ -93,6 +93,10 @@ sub import
   our @ISA = ('Media::LibMTP::API::Folder');
 }
 {
+  package Media::LibMTP::API::MTPDeviceList;
+  our @ISA = ('Media::LibMTP::API::MTPDevice');
+}
+{
   package Media::LibMTP::API::PlaylistList;
   our @ISA = ('Media::LibMTP::API::Playlist');
 }
@@ -144,10 +148,10 @@ method.  You must preserve the reference to the first struct returned
 by libmtp until you are done with all the structures in the list,
 because when that reference is dropped, the entire list will be
 deleted.  This is the purpose of the AlbumList, FileList, FolderList,
-PlaylistList, and TrackList subclasses: they have a destructor that
-cleans up the list.  For example, the C<Get_Album_List> method returns
-an AlbumList object (a subclass of Album), but C<< $album->next >>
-returns an Album object.
+MTPDeviceList, PlaylistList, and TrackList subclasses: they have a
+destructor that cleans up the list.  For example, the
+C<Get_Album_List> method returns an AlbumList object (a subclass of
+Album), but C<< $album->next >> returns an Album object.
 
 =head1 SEE ALSO
 
