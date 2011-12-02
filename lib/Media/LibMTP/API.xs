@@ -710,6 +710,14 @@ LIBMTP_Get_File_To_File(device, id, path)
 #// 	void *		arg4
 #// 	void const *	arg5
 
+MLA_FileList
+LIBMTP_Get_Filelisting(self)
+	MLA_MTPDevice	self
+   CODE:
+	RETVAL = LIBMTP_Get_Filelisting_With_Callback(self, NULL, NULL);
+   OUTPUT:
+	RETVAL
+
 #//FIXME
 #// MLA_File
 #// LIBMTP_Get_Filelisting_With_Callback(self, arg1, arg2)
