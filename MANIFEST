@@ -5,6 +5,7 @@ MANIFEST
 META.json
 META.yml
 README
+examples/install_audiobook.pl
 lib/Media/LibMTP/API.pm
 lib/Media/LibMTP/API.xs
 lib/Media/LibMTP/API/Constants.pm
