@@ -801,12 +801,28 @@ LIBMTP_Get_String_From_Object(self, arg1, arg2)
 	uint32_t		arg1
 	LIBMTP_property_t	arg2
 
-#// FIXME
-#// int
-#// LIBMTP_Get_Supported_Filetypes(self, arg1, arg2)
-#// 	MLA_MTPDevice		self
-#// 	uint16_t **	arg1
-#// 	uint16_t *	arg2
+#// Return an arrayref, or undef on failure
+AV *
+LIBMTP_Get_Supported_Filetypes(self)
+	MLA_MTPDevice	self
+   PREINIT:
+	uint16_t *	filetypes = NULL;
+	uint16_t	length = 0;
+	int		i;
+   CODE:
+	if (LIBMTP_Get_Supported_Filetypes(self, &filetypes, &length)) {
+	  XSRETURN_UNDEF;
+	} else {
+	  RETVAL = newAV();
+	  sv_2mortal((SV*)RETVAL);
+	  av_extend(RETVAL, length - 1);
+	  for (i = 0; i < length; ++i) {
+	    av_store(RETVAL, i, newSVuv(filetypes[i]));
+	  }
+	  Safefree(filetypes);
+	}
+   OUTPUT:
+	RETVAL
 
 Utf8String2Free
 LIBMTP_Get_Syncpartner(self)
