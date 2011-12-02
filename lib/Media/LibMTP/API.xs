@@ -226,11 +226,348 @@ DESTROY(self)
 #--------------------------------------------------------------------
 MODULE = Media::LibMTP::API  PACKAGE = Media::LibMTP::API::AllowedValues
 
+MLA_AllowedValues
+new(class)
+	SV *	class
+   CODE:
+	Newxz(RETVAL, 1, LIBMTP_allowed_values_t);
+   OUTPUT:
+	RETVAL
+
 void
 DESTROY(self)
 	MLA_AllowedValues	self
    CODE:
 	LIBMTP_destroy_allowed_values_t(self);
+        Safefree(self);
+
+uint8_t
+u8max(self)
+	MLA_AllowedValues	self
+   CODE:
+	RETVAL = self->u8max;
+   OUTPUT:
+	RETVAL
+
+uint8_t
+u8min(self)
+	MLA_AllowedValues	self
+   CODE:
+	RETVAL = self->u8min;
+   OUTPUT:
+	RETVAL
+
+uint8_t
+u8step(self)
+	MLA_AllowedValues	self
+   CODE:
+	RETVAL = self->u8step;
+   OUTPUT:
+	RETVAL
+
+int8_t
+i8max(self)
+	MLA_AllowedValues	self
+   CODE:
+	RETVAL = self->i8max;
+   OUTPUT:
+	RETVAL
+
+int8_t
+i8min(self)
+	MLA_AllowedValues	self
+   CODE:
+	RETVAL = self->i8min;
+   OUTPUT:
+	RETVAL
+
+int8_t
+i8step(self)
+	MLA_AllowedValues	self
+   CODE:
+	RETVAL = self->i8step;
+   OUTPUT:
+	RETVAL
+
+uint16_t
+u16max(self)
+	MLA_AllowedValues	self
+   CODE:
+	RETVAL = self->u16max;
+   OUTPUT:
+	RETVAL
+
+uint16_t
+u16min(self)
+	MLA_AllowedValues	self
+   CODE:
+	RETVAL = self->u16min;
+   OUTPUT:
+	RETVAL
+
+uint16_t
+u16step(self)
+	MLA_AllowedValues	self
+   CODE:
+	RETVAL = self->u16step;
+   OUTPUT:
+	RETVAL
+
+int16_t
+i16max(self)
+	MLA_AllowedValues	self
+   CODE:
+	RETVAL = self->i16max;
+   OUTPUT:
+	RETVAL
+
+int16_t
+i16min(self)
+	MLA_AllowedValues	self
+   CODE:
+	RETVAL = self->i16min;
+   OUTPUT:
+	RETVAL
+
+int16_t
+i16step(self)
+	MLA_AllowedValues	self
+   CODE:
+	RETVAL = self->i16step;
+   OUTPUT:
+	RETVAL
+
+uint32_t
+u32max(self)
+	MLA_AllowedValues	self
+   CODE:
+	RETVAL = self->u32max;
+   OUTPUT:
+	RETVAL
+
+uint32_t
+u32min(self)
+	MLA_AllowedValues	self
+   CODE:
+	RETVAL = self->u32min;
+   OUTPUT:
+	RETVAL
+
+uint32_t
+u32step(self)
+	MLA_AllowedValues	self
+   CODE:
+	RETVAL = self->u32step;
+   OUTPUT:
+	RETVAL
+
+int32_t
+i32max(self)
+	MLA_AllowedValues	self
+   CODE:
+	RETVAL = self->i32max;
+   OUTPUT:
+	RETVAL
+
+int32_t
+i32min(self)
+	MLA_AllowedValues	self
+   CODE:
+	RETVAL = self->i32min;
+   OUTPUT:
+	RETVAL
+
+int32_t
+i32step(self)
+	MLA_AllowedValues	self
+   CODE:
+	RETVAL = self->i32step;
+   OUTPUT:
+	RETVAL
+
+uint64_t
+u64max(self)
+	MLA_AllowedValues	self
+   CODE:
+	RETVAL = self->u64max;
+   OUTPUT:
+	RETVAL
+
+uint64_t
+u64min(self)
+	MLA_AllowedValues	self
+   CODE:
+	RETVAL = self->u64min;
+   OUTPUT:
+	RETVAL
+
+uint64_t
+u64step(self)
+	MLA_AllowedValues	self
+   CODE:
+	RETVAL = self->u64step;
+   OUTPUT:
+	RETVAL
+
+int64_t
+i64max(self)
+	MLA_AllowedValues	self
+   CODE:
+	RETVAL = self->i64max;
+   OUTPUT:
+	RETVAL
+
+int64_t
+i64min(self)
+	MLA_AllowedValues	self
+   CODE:
+	RETVAL = self->i64min;
+   OUTPUT:
+	RETVAL
+
+int64_t
+i64step(self)
+	MLA_AllowedValues	self
+   CODE:
+	RETVAL = self->i64step;
+   OUTPUT:
+	RETVAL
+
+uint16_t
+num_entries(self)
+	MLA_AllowedValues	self
+   CODE:
+	RETVAL = self->num_entries;
+   OUTPUT:
+	RETVAL
+
+LIBMTP_datatype_t
+datatype(self)
+	MLA_AllowedValues	self
+   CODE:
+	RETVAL = self->datatype;
+   OUTPUT:
+	RETVAL
+
+int
+is_range(self)
+	MLA_AllowedValues	self
+   CODE:
+	RETVAL = self->is_range;
+   OUTPUT:
+	RETVAL
+
+int8_t *
+i8vals(self)
+	MLA_AllowedValues	self
+   PREINIT:
+	int size_RETVAL;
+   CODE:
+	size_RETVAL = self->num_entries;
+	RETVAL = self->i8vals;
+	if (!RETVAL) XSRETURN_EMPTY;
+   OUTPUT:
+	RETVAL
+   CLEANUP:
+	XSRETURN(size_RETVAL);
+
+uint8_t *
+u8vals(self)
+	MLA_AllowedValues	self
+   PREINIT:
+	int size_RETVAL;
+   CODE:
+	size_RETVAL = self->num_entries;
+	RETVAL = self->u8vals;
+	if (!RETVAL) XSRETURN_EMPTY;
+   OUTPUT:
+	RETVAL
+   CLEANUP:
+	XSRETURN(size_RETVAL);
+
+int16_t *
+i16vals(self)
+	MLA_AllowedValues	self
+   PREINIT:
+	int size_RETVAL;
+   CODE:
+	size_RETVAL = self->num_entries;
+	RETVAL = self->i16vals;
+	if (!RETVAL) XSRETURN_EMPTY;
+   OUTPUT:
+	RETVAL
+   CLEANUP:
+	XSRETURN(size_RETVAL);
+
+uint16_t *
+u16vals(self)
+	MLA_AllowedValues	self
+   PREINIT:
+	int size_RETVAL;
+   CODE:
+	size_RETVAL = self->num_entries;
+	RETVAL = self->u16vals;
+	if (!RETVAL) XSRETURN_EMPTY;
+   OUTPUT:
+	RETVAL
+   CLEANUP:
+	XSRETURN(size_RETVAL);
+
+int32_t *
+i32vals(self)
+	MLA_AllowedValues	self
+   PREINIT:
+	int size_RETVAL;
+   CODE:
+	size_RETVAL = self->num_entries;
+	RETVAL = self->i32vals;
+	if (!RETVAL) XSRETURN_EMPTY;
+   OUTPUT:
+	RETVAL
+   CLEANUP:
+	XSRETURN(size_RETVAL);
+
+uint32_t *
+u32vals(self)
+	MLA_AllowedValues	self
+   PREINIT:
+	int size_RETVAL;
+   CODE:
+	size_RETVAL = self->num_entries;
+	RETVAL = self->u32vals;
+	if (!RETVAL) XSRETURN_EMPTY;
+   OUTPUT:
+	RETVAL
+   CLEANUP:
+	XSRETURN(size_RETVAL);
+
+int64_t *
+i64vals(self)
+	MLA_AllowedValues	self
+   PREINIT:
+	int size_RETVAL;
+   CODE:
+	size_RETVAL = self->num_entries;
+	RETVAL = self->i64vals;
+	if (!RETVAL) XSRETURN_EMPTY;
+   OUTPUT:
+	RETVAL
+   CLEANUP:
+	XSRETURN(size_RETVAL);
+
+uint64_t *
+u64vals(self)
+	MLA_AllowedValues	self
+   PREINIT:
+	int size_RETVAL;
+   CODE:
+	size_RETVAL = self->num_entries;
+	RETVAL = self->u64vals;
+	if (!RETVAL) XSRETURN_EMPTY;
+   OUTPUT:
+	RETVAL
+   CLEANUP:
+	XSRETURN(size_RETVAL);
 
 
 #--------------------------------------------------------------------

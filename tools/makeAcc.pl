@@ -21,6 +21,12 @@ use 5.010;
 use autodie ':io';
 
 my $header = '/usr/include/libmtp.h';
+my $read_only;
+
+if ($ARGV[0] eq '-r') {
+  shift @ARGV;
+  $read_only = 1;
+}
 
 my @type = @ARGV;
 
@@ -41,13 +47,25 @@ sub process_struct
 
   while (<$in>) {
     last if /^\}/;
+    next if /^\s*\/\*/;         # comment
+    next if /^\s*\*\s/;         # continued comment
+    next if /^\s*\*\//;         # end comment
 
-    my ($type, $field, $desc) =
-        m!^\s*(\w+\b(?:\s*\*)?)\s*(\w+);\s*/\*\*<\s*(.+?)\s*\*/!
+    my $ro = $read_only;
+    my $newValue = 'newValue';
+    my ($type, $field) =
+        m!^\s*(\w+\b(?:\s*\*)?)\s*(\w+);!
         or die "Bad line $.:$_";
 
     if ($type =~ /^LIBMTP_(\w+)_t\s*\*$/) {
       $type = "MLA_\u$1";
+      $ro = 1;
+    } elsif ($type =~ /^char\s*\*$/) {
+      $type = 'Utf8String';
+      $newValue = "strdup($newValue)";
+    }
+
+    if ($ro) {
       print <<"END READ-ONLY";
 $type
 $field(self)
@@ -58,13 +76,6 @@ $field(self)
 	RETVAL\n
 END READ-ONLY
     } else {
-      my $newValue = 'newValue';
-
-      if ($type =~ /^char\s*\*$/) {
-        $type = 'Utf8String';
-        $newValue = "strdup($newValue)";
-      }
-
       print <<"END READ-WRITE";
 $type
 $field(self, newValue = NO_INIT)
