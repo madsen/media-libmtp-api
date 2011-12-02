@@ -675,15 +675,21 @@ MLA_Error
 LIBMTP_Get_Errorstack(self)
 	MLA_MTPDevice	self
 
+#// FIXME implement callback
+int
+LIBMTP_Get_File_To_File(device, id, path)
+#//LIBMTP_Get_File_To_File(device, id, path, callback, data)
+	MLA_MTPDevice	device
+	uint32_t	id
+	Utf8String	path
+#//	void *		callback
+#//	void const *	data
+   CODE:
+	RETVAL = LIBMTP_Get_File_To_File(device, id, path, NULL, NULL);
+   OUTPUT:
+	RETVAL
+
 #// FIXME
-#// int
-#// LIBMTP_Get_File_To_File(self, arg1, arg2, arg3, arg4)
-#// 	MLA_MTPDevice	self
-#// 	uint32_t	arg1
-#// 	char const *	arg2
-#// 	void *		arg3
-#// 	void const *	arg4
-#//
 #// int
 #// LIBMTP_Get_File_To_File_Descriptor(self, arg1, arg2, arg3, arg4)
 #// 	MLA_MTPDevice	self
@@ -806,15 +812,21 @@ Utf8String2Free
 LIBMTP_Get_Syncpartner(self)
 	MLA_MTPDevice	self
 
+#// FIXME implement callback
+int
+LIBMTP_Get_Track_To_File(device, id, path)
+#// LIBMTP_Get_Track_To_File(device, id, path, callback, data)
+	MLA_MTPDevice	device
+	uint32_t	id
+	Utf8String	path
+#//	void *		callback
+#//	void const *	data
+   CODE:
+	RETVAL = LIBMTP_Get_Track_To_File(device, id, path, NULL, NULL);
+   OUTPUT:
+	RETVAL
+
 #// FIXME
-#// int
-#// LIBMTP_Get_Track_To_File(self, arg1, arg2, arg3, arg4)
-#// 	MLA_MTPDevice	self
-#// 	uint32_t	arg1
-#// 	char const *	arg2
-#// 	void *		arg3
-#// 	void const *	arg4
-#//
 #// int
 #// LIBMTP_Get_Track_To_File_Descriptor(self, arg1, arg2, arg3, arg4)
 #// 	MLA_MTPDevice	self
@@ -915,15 +927,21 @@ int
 LIBMTP_Reset_Device(self)
 	MLA_MTPDevice	self
 
+#// FIXME implement callback
+int
+LIBMTP_Send_File_From_File(device, path, filedata)
+#//LIBMTP_Send_File_From_File(device, path, filedata, callback, data)
+	MLA_MTPDevice	device
+	Utf8String	path
+	MLA_File	filedata
+#//	void *		callback
+#//	void const *	data
+   CODE:
+	RETVAL = LIBMTP_Send_File_From_File(device, path, filedata, NULL, NULL);
+   OUTPUT:
+	RETVAL
+
 #// FIXME
-#// int
-#// LIBMTP_Send_File_From_File(self, arg1, arg2, arg3, arg4)
-#// 	MLA_MTPDevice	self
-#// 	char const *	arg1
-#// 	MLA_File	arg2
-#// 	void *		arg3
-#// 	void const *	arg4
-#//
 #// int
 #// LIBMTP_Send_File_From_File_Descriptor(self, arg1, arg2, arg3, arg4)
 #// 	MLA_MTPDevice	self
