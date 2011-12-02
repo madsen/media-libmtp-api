@@ -656,11 +656,16 @@ LIBMTP_Get_Batterylevel(self, maximum_level, current_level)
 	maximum_level
 	current_level
 
-#// FIXME
-#// int
-#// LIBMTP_Get_Device_Certificate(self, arg1)
-#// 	MLA_MTPDevice		self
-#// 	char **	arg1
+int
+LIBMTP_Get_Device_Certificate(self, devcert)
+	MLA_MTPDevice	self
+	Utf8String2Free	devcert = NO_INIT
+   CODE:
+	devcert = NULL;
+	RETVAL = LIBMTP_Get_Device_Certificate(self, &devcert);
+   OUTPUT:
+	RETVAL
+	devcert
 
 Utf8String2Free
 LIBMTP_Get_Deviceversion(self)
@@ -764,11 +769,16 @@ LIBMTP_Get_Representative_Sample_Format(self, filetype, sample)
 	RETVAL
 	sample
 
-#// FIXME
-#// int
-#// LIBMTP_Get_Secure_Time(self, arg1)
-#// 	MLA_MTPDevice		self
-#// 	char **	arg1
+int
+LIBMTP_Get_Secure_Time(self, sectime)
+	MLA_MTPDevice	self
+	Utf8String2Free	sectime = NO_INIT
+   CODE:
+	sectime = NULL;
+	RETVAL = LIBMTP_Get_Secure_Time(self, &sectime);
+   OUTPUT:
+	RETVAL
+	sectime
 
 Utf8String2Free
 LIBMTP_Get_Serialnumber(self)
