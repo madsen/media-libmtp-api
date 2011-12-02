@@ -31,7 +31,8 @@ our %EXPORT_TAGS;
 use Media::LibMTP::API::Constants ();
 
 push @{ $EXPORT_TAGS{'all'} },
-  qw(Get_Filetype_Description Get_First_Device Get_Property_Description);
+  qw(Detect_Raw_Devices Get_Filetype_Description Get_First_Device
+     Get_Property_Description);
 
 *EXPORT_OK = $EXPORT_TAGS{'all'}; # just alias the arrayref
 

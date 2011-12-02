@@ -26,6 +26,13 @@ typedef const char *               Utf8StringConst;
 typedef char *                     Utf8String;
 typedef char *                     Utf8String2Free;
 
+struct MLA_raw_device_list {
+  MLA_RawDevice  devices;
+  int            numdevs;
+};
+
+typedef struct MLA_raw_device_list *  MLA_RawDeviceList;
+
 #include "const-c.inc"
 
 MODULE = Media::LibMTP::API  PACKAGE = Media::LibMTP::API  PREFIX = LIBMTP_
@@ -37,11 +44,15 @@ LIBMTP_Check_Specific_Device(busno, devno)
 	int	busno
 	int	devno
 
-#// FIXME
-#// LIBMTP_error_number_t
-#// LIBMTP_Detect_Raw_Devices(arg0, arg1)
-#// 	LIBMTP_raw_device_t **	arg0
-#// 	int *	arg1
+LIBMTP_error_number_t
+LIBMTP_Detect_Raw_Devices(list)
+	MLA_RawDeviceList	list = NO_INIT
+   CODE:
+	Newxz(list, 1, struct MLA_raw_device_list);
+	RETVAL = LIBMTP_Detect_Raw_Devices(&list->devices, &list->numdevs);
+   OUTPUT:
+	RETVAL
+	list
 
 #//FIXME use AV* ???
 #//  LIBMTP_error_number_t
@@ -68,14 +79,6 @@ LIBMTP_Get_Property_Description(inproperty)
 
 void
 LIBMTP_Init()
-
-MLA_MTPDevice
-LIBMTP_Open_Raw_Device(arg0)
-	MLA_RawDevice	arg0
-
-MLA_MTPDevice
-LIBMTP_Open_Raw_Device_Uncached(arg0)
-	MLA_RawDevice	arg0
 
 void
 LIBMTP_Set_Debug(arg0)
@@ -1522,6 +1525,122 @@ DESTROY(self)
 	MLA_Playlist	self
    CODE:
 	LIBMTP_destroy_playlist_t(self);
+
+
+#--------------------------------------------------------------------
+MODULE = Media::LibMTP::API  PACKAGE = Media::LibMTP::API::RawDevice
+
+Utf8String
+vendor(self)
+	MLA_RawDevice	self
+   CODE:
+	RETVAL = self->device_entry.vendor;
+   OUTPUT:
+	RETVAL
+
+uint16_t
+vendor_id(self)
+	MLA_RawDevice	self
+   CODE:
+	RETVAL = self->device_entry.vendor_id;
+   OUTPUT:
+	RETVAL
+
+Utf8String
+product(self)
+	MLA_RawDevice	self
+   CODE:
+	RETVAL = self->device_entry.product;
+   OUTPUT:
+	RETVAL
+
+uint16_t
+product_id(self)
+	MLA_RawDevice	self
+   CODE:
+	RETVAL = self->device_entry.product_id;
+   OUTPUT:
+	RETVAL
+
+uint32_t
+device_flags(self)
+	MLA_RawDevice	self
+   CODE:
+	RETVAL = self->device_entry.device_flags;
+   OUTPUT:
+	RETVAL
+
+uint32_t
+bus_location(self)
+	MLA_RawDevice	self
+   CODE:
+	RETVAL = self->bus_location;
+   OUTPUT:
+	RETVAL
+
+uint8_t
+devnum(self)
+	MLA_RawDevice	self
+   CODE:
+	RETVAL = self->devnum;
+   OUTPUT:
+	RETVAL
+
+MODULE = Media::LibMTP::API  PACKAGE = Media::LibMTP::API::RawDevice  PREFIX = LIBMTP_
+
+MLA_MTPDevice
+LIBMTP_Open_Raw_Device(self)
+	MLA_RawDevice	self
+
+MLA_MTPDevice
+LIBMTP_Open_Raw_Device_Uncached(self)
+	MLA_RawDevice	self
+
+
+#--------------------------------------------------------------------
+MODULE = Media::LibMTP::API  PACKAGE = Media::LibMTP::API::RawDeviceList
+
+void
+DESTROY(self)
+	MLA_RawDeviceList	self
+   CODE:
+	Safefree(self->devices);
+	Safefree(self);
+
+int
+count(self)
+	MLA_RawDeviceList	self
+   CODE:
+	RETVAL = self->numdevs;
+   OUTPUT:
+	RETVAL
+
+MLA_RawDevice
+device(self, index)
+	MLA_RawDeviceList	self
+	int			index
+   CODE:
+	if (index >= 0 && index < self->numdevs) {
+	  RETVAL = self->devices + index;
+	} else {
+	  RETVAL = NULL;
+	}
+   OUTPUT:
+	RETVAL
+
+void
+devices(self)
+	MLA_RawDeviceList	self
+   PREINIT:
+	int i;
+   PPCODE:
+	EXTEND(SP, self->numdevs);
+	for (i = 0; i < self->numdevs; ++i) {
+	  SV* sv = sv_newmortal();
+	  sv_setref_pv(sv, "Media::LibMTP::API::RawDevice",
+		       (void*)(self->devices + i));
+	  PUSHs(sv);
+	}
 
 
 #--------------------------------------------------------------------

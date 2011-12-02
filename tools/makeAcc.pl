@@ -23,6 +23,8 @@ use autodie ':io';
 my $header = '/usr/include/libmtp.h';
 my $read_only;
 
+$header = 'libmtp.h' if -e 'libmtp.h'; # try current dir first
+
 if ($ARGV[0] eq '-r') {
   shift @ARGV;
   $read_only = 1;
@@ -54,7 +56,7 @@ sub process_struct
     my $ro = $read_only;
     my $newValue = 'newValue';
     my ($type, $field) =
-        m!^\s*(\w+\b(?:\s*\*)?)\s*(\w+);!
+        m!^\s*(\w+\b(?:\s*\*)?)\s*(\w+(?:\.\w+)?);!
         or die "Bad line $.:$_";
 
     if ($type =~ /^LIBMTP_(\w+)_t\s*\*$/) {
