@@ -642,12 +642,19 @@ LIBMTP_Get_Allowed_Property_Values(self, arg1, arg2, arg3)
 	LIBMTP_filetype_t	arg2
 	MLA_AllowedValues	arg3
 
-#//FIXME return list
-#// int
-#// LIBMTP_Get_Batterylevel(self, arg1, arg2)
-#// 	MLA_MTPDevice	self
-#// 	uint8_t *	arg1
-#// 	uint8_t *	arg2
+int
+LIBMTP_Get_Batterylevel(self, maximum_level, current_level)
+	MLA_MTPDevice	self
+	uint8_t		maximum_level = NO_INIT
+	uint8_t		current_level = NO_INIT
+   CODE:
+	RETVAL = LIBMTP_Get_Batterylevel(
+	  self, &maximum_level, &current_level
+	);
+   OUTPUT:
+	RETVAL
+	maximum_level
+	current_level
 
 #// FIXME
 #// int
