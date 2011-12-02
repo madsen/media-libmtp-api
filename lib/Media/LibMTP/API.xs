@@ -692,15 +692,21 @@ LIBMTP_Get_File_To_File(device, id, path)
    OUTPUT:
 	RETVAL
 
+#// FIXME implement callback
+int
+LIBMTP_Get_File_To_File_Descriptor(device, id, fd)
+#//LIBMTP_Get_File_To_File_Descriptor(device, id, fd, callback, data)
+	MLA_MTPDevice	device
+	uint32_t	id
+	int		fd
+#//	void *		arg3
+#//	void const *	arg4
+   CODE:
+	RETVAL = LIBMTP_Get_File_To_File_Descriptor(device, id, fd, NULL, NULL);
+   OUTPUT:
+	RETVAL
+
 #// FIXME
-#// int
-#// LIBMTP_Get_File_To_File_Descriptor(self, arg1, arg2, arg3, arg4)
-#// 	MLA_MTPDevice	self
-#// 	uint32_t	arg1
-#// 	int		arg2
-#// 	void *		arg3
-#// 	void const *	arg4
-#//
 #// int
 #// LIBMTP_Get_File_To_Handler(self, arg1, arg2, arg3, arg4, arg5)
 #// 	MLA_MTPDevice	self
@@ -853,15 +859,21 @@ LIBMTP_Get_Track_To_File(device, id, path)
    OUTPUT:
 	RETVAL
 
+#// FIXME implement callback
+int
+LIBMTP_Get_Track_To_File_Descriptor(device, id, fd)
+#//LIBMTP_Get_Track_To_File_Descriptor(device, id, fd, callback, data)
+	MLA_MTPDevice	device
+	uint32_t	id
+	int		fd
+#//	void *		callback
+#//	void const *	data
+   CODE:
+	RETVAL = LIBMTP_Get_Track_To_File_Descriptor(device, id, fd, NULL, NULL);
+   OUTPUT:
+	RETVAL
+
 #// FIXME
-#// int
-#// LIBMTP_Get_Track_To_File_Descriptor(self, arg1, arg2, arg3, arg4)
-#// 	MLA_MTPDevice	self
-#// 	uint32_t	arg1
-#// 	int		arg2
-#// 	void *		arg3
-#// 	void const *	arg4
-#//
 #// int
 #// LIBMTP_Get_Track_To_Handler(self, arg1, arg2, arg3, arg4, arg5)
 #// 	MLA_MTPDevice	self
@@ -968,15 +980,22 @@ LIBMTP_Send_File_From_File(device, path, filedata)
    OUTPUT:
 	RETVAL
 
+#// FIXME implement callback
+int
+LIBMTP_Send_File_From_File_Descriptor(device, fd, filedata, callback, data)
+#//LIBMTP_Send_File_From_File_Descriptor(device, fd, filedata, callback, data)
+	MLA_MTPDevice	device
+	int		fd
+	MLA_File	filedata
+#//	void *		callback
+#//	void const *	data
+   CODE:
+	RETVAL = LIBMTP_Send_File_From_File_Descriptor(device, fd, filedata,
+						       NULL, NULL);
+   OUTPUT:
+	RETVAL
+
 #// FIXME
-#// int
-#// LIBMTP_Send_File_From_File_Descriptor(self, arg1, arg2, arg3, arg4)
-#// 	MLA_MTPDevice	self
-#// 	int		arg1
-#// 	MLA_File	arg2
-#// 	void *		arg3
-#// 	void const *	arg4
-#//
 #// int
 #// LIBMTP_Send_File_From_Handler(self, arg1, arg2, arg3, arg4, arg5)
 #// 	MLA_MTPDevice	self
@@ -1006,15 +1025,22 @@ LIBMTP_Send_Track_From_File(device, path, metadata)
    OUTPUT:
 	RETVAL
 
+#// FIXME implement callback
+int
+LIBMTP_Send_Track_From_File_Descriptor(device, fd, metadata)
+#//LIBMTP_Send_Track_From_File_Descriptor(device, fd, metadata, callback, data)
+	MLA_MTPDevice	device
+	int		fd
+	MLA_Track	metadata
+#//	void *		callback
+#//	void const *	data
+   CODE:
+	RETVAL = LIBMTP_Send_Track_From_File_Descriptor(device, fd, metadata,
+							NULL, NULL);
+   OUTPUT:
+	RETVAL
+
 #// FIXME
-#// int
-#// LIBMTP_Send_Track_From_File_Descriptor(self, arg1, arg2, arg3, arg4)
-#// 	MLA_MTPDevice	self
-#// 	int		arg1
-#// 	MLA_Track	arg2
-#// 	void *		arg3
-#// 	void const *	arg4
-#//
 #// int
 #// LIBMTP_Send_Track_From_Handler(self, arg1, arg2, arg3, arg4, arg5)
 #// 	MLA_MTPDevice	self
