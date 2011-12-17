@@ -12,6 +12,7 @@ typedef LIBMTP_allowed_values_t *  MLA_AllowedValues;
 typedef LIBMTP_file_t *            MLA_File;
 typedef LIBMTP_file_t *            MLA_FileList;    /* needs DESTROY */
 typedef LIBMTP_filesampledata_t *  MLA_FileSampleData;
+typedef LIBMTP_devicestorage_t *   MLA_DeviceStorage;
 typedef LIBMTP_error_t *           MLA_Error;
 typedef LIBMTP_folder_t *          MLA_Folder;
 typedef LIBMTP_folder_t *          MLA_FolderList;  /* needs DESTROY */
@@ -665,6 +666,14 @@ next(self)
    OUTPUT:
 	RETVAL
 
+MLA_DeviceStorage
+storage(self)
+	MLA_MTPDevice	self
+   CODE:
+	RETVAL = self->storage;
+   OUTPUT:
+	RETVAL
+
 
 MODULE = Media::LibMTP::API  PACKAGE = Media::LibMTP::API::MTPDevice  PREFIX = LIBMTP_
 
@@ -702,11 +711,10 @@ void
 LIBMTP_Dump_Errorstack(self)
 	MLA_MTPDevice	self
 
-#// FIXME
-#// int
-#// LIBMTP_Format_Storage(self, arg1)
-#// 	MLA_MTPDevice		self
-#// 	LIBMTP_devicestorage_t *	arg1
+int
+LIBMTP_Format_Storage(self, storage)
+	MLA_MTPDevice		self
+	MLA_DeviceStorage	storage
 
 MLA_AlbumList
 LIBMTP_Get_Album(self, arg1)
@@ -892,9 +900,9 @@ LIBMTP_Get_Serialnumber(self)
 	MLA_MTPDevice	self
 
 int
-LIBMTP_Get_Storage(self, arg1)
+LIBMTP_Get_Storage(self, sortby = LIBMTP_STORAGE_SORTBY_NOTSORTED)
 	MLA_MTPDevice	self
-	int		arg1
+	int		sortby
 
 Utf8String2Free
 LIBMTP_Get_String_From_Object(self, arg1, arg2)
@@ -1231,6 +1239,99 @@ DESTROY(self)
 	MLA_MTPDevice	self
    CODE:
 	LIBMTP_Release_Device_List(self);
+
+
+#--------------------------------------------------------------------
+MODULE = Media::LibMTP::API  PACKAGE = Media::LibMTP::API::DeviceStorage
+
+uint32_t
+id(self)
+	MLA_DeviceStorage	self
+   CODE:
+	RETVAL = self->id;
+   OUTPUT:
+	RETVAL
+
+uint16_t
+StorageType(self)
+	MLA_DeviceStorage	self
+   CODE:
+	RETVAL = self->StorageType;
+   OUTPUT:
+	RETVAL
+
+uint16_t
+FilesystemType(self)
+	MLA_DeviceStorage	self
+   CODE:
+	RETVAL = self->FilesystemType;
+   OUTPUT:
+	RETVAL
+
+uint16_t
+AccessCapability(self)
+	MLA_DeviceStorage	self
+   CODE:
+	RETVAL = self->AccessCapability;
+   OUTPUT:
+	RETVAL
+
+uint64_t
+MaxCapacity(self)
+	MLA_DeviceStorage	self
+   CODE:
+	RETVAL = self->MaxCapacity;
+   OUTPUT:
+	RETVAL
+
+uint64_t
+FreeSpaceInBytes(self)
+	MLA_DeviceStorage	self
+   CODE:
+	RETVAL = self->FreeSpaceInBytes;
+   OUTPUT:
+	RETVAL
+
+uint64_t
+FreeSpaceInObjects(self)
+	MLA_DeviceStorage	self
+   CODE:
+	RETVAL = self->FreeSpaceInObjects;
+   OUTPUT:
+	RETVAL
+
+Utf8String
+StorageDescription(self)
+	MLA_DeviceStorage	self
+   CODE:
+	RETVAL = self->StorageDescription;
+   OUTPUT:
+	RETVAL
+
+Utf8String
+VolumeIdentifier(self)
+	MLA_DeviceStorage	self
+   CODE:
+	RETVAL = self->VolumeIdentifier;
+   OUTPUT:
+	RETVAL
+
+MLA_DeviceStorage
+next(self)
+	MLA_DeviceStorage	self
+   CODE:
+	RETVAL = self->next;
+   OUTPUT:
+	RETVAL
+
+MLA_DeviceStorage
+prev(self)
+	MLA_DeviceStorage	self
+   CODE:
+	RETVAL = self->prev;
+   OUTPUT:
+	RETVAL
+
 
 #--------------------------------------------------------------------
 MODULE = Media::LibMTP::API  PACKAGE = Media::LibMTP::API::Error
