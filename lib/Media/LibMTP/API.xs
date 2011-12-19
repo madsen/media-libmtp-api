@@ -86,6 +86,34 @@ void
 LIBMTP_Set_Debug(arg0)
 	int	arg0
 
+int
+LIBMTP_FILETYPE_IS_AUDIO(filetype)
+	LIBMTP_filetype_t	filetype
+
+int
+LIBMTP_FILETYPE_IS_VIDEO(filetype)
+	LIBMTP_filetype_t	filetype
+
+int
+LIBMTP_FILETYPE_IS_AUDIOVIDEO(filetype)
+	LIBMTP_filetype_t	filetype
+
+int
+LIBMTP_FILETYPE_IS_TRACK(filetype)
+	LIBMTP_filetype_t	filetype
+
+int
+LIBMTP_FILETYPE_IS_IMAGE(filetype)
+	LIBMTP_filetype_t	filetype
+
+int
+LIBMTP_FILETYPE_IS_ADDRESSBOOK(filetype)
+	LIBMTP_filetype_t	filetype
+
+int
+LIBMTP_FILETYPE_IS_CALENDAR(filetype)
+	LIBMTP_filetype_t	filetype
+
 
 #--------------------------------------------------------------------
 MODULE = Media::LibMTP::API  PACKAGE = Media::LibMTP::API::Album
