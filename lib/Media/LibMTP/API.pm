@@ -70,6 +70,7 @@ sub import
   } # end for @_
 
   if (defined $code) {
+    no warnings;
     local $@;
     eval $code;
   } # end if we're exporting constants
