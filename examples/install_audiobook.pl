@@ -181,13 +181,15 @@ for my $directory (@ARGV) {
 
       $artist = conjunction(@artists) if @artists;
 
+      die "No chapter title" unless defined $title;
+
       if ($tracknumber == 0) {
         die "No book title\n" unless defined $album_name;
 
         say "Album:  $album_name";
         say "Artist: $artist" if defined $artist;
 
-        $folder_id = create_book_folder($artists[0], $title)
+        $folder_id = create_book_folder($artists[0], $album_name)
             or next BOOK;
       } # end if track 0
     } # end reading comments from track
@@ -198,7 +200,7 @@ for my $directory (@ARGV) {
     my $track = Media::LibMTP::API::Track->new;
     $track->parent_id($folder_id);
     $track->tracknumber($tracknumber);
-    $track->title($title)   if defined $title;
+    $track->title($title);
     $track->artist($artist) if defined $artist;
     $track->album($album_name);
     $track->filename($filenames[$tracknumber]);
