@@ -25,7 +25,7 @@ our $VERSION = '0.01';
 # This file is part of {{$dist}} {{$dist_version}} ({{$date}})
 
 use Exporter 5.57 'import';     # exported import method
-our @EXPORT_OK = qw(filetype);
+our @EXPORT_OK = qw(filetype filetype_from_path);
 
 use Media::LibMTP::API ':filetypes';
 
@@ -82,8 +82,17 @@ sub filetype
 {
   my $name = shift;
 
-  $typemap{ lc $name };
+  $typemap{ lc $name } // LIBMTP_FILETYPE_UNKNOWN;
 } # end filetype
+
+sub filetype_from_path
+{
+  my ($path) = @_;
+
+  if ($path =~ /\.([^.]+)\z/) {
+    filetype($1);
+  }
+} # end filetype_from_path
 
 #=====================================================================
 # Package Return Value:
