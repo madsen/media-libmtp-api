@@ -39,6 +39,8 @@ typedef struct MLA_raw_device_list *  MLA_RawDeviceList;
 
 MODULE = Media::LibMTP::API  PACKAGE = Media::LibMTP::API  PREFIX = LIBMTP_
 
+PROTOTYPES: DISABLE
+
 INCLUDE: const-xs.inc
 
 int
