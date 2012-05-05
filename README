@@ -21,6 +21,10 @@ To install this module, run the following commands:
 
 {{ $t->build_instructions }}
 
+You may see a warning about "Use of uninitialized value
+$ExtUtils::ParseXS::num in subtraction".  This appears to be harmless.
+See https://rt.perl.org/rt3/Ticket/Display.html?id=112776 for details.
+
 
 
 DEPENDENCIES
