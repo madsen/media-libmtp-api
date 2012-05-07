@@ -9,9 +9,9 @@ use 5.010;
 
 use Media::LibMTP::API ':filetypes';
 
-my @tests;
+my (@names, @paths);
 BEGIN {
-  @tests = (
+  @names = (
     'image/gif'  => LIBMTP_FILETYPE_GIF,
     jpg          => LIBMTP_FILETYPE_JPEG,
     mpg          => LIBMTP_FILETYPE_MPEG,
@@ -19,16 +19,34 @@ BEGIN {
     ogg          => LIBMTP_FILETYPE_OGG,
   );
 
-  plan tests => 1 + @tests/2;
+  @paths = (
+    'image.gif'                 => LIBMTP_FILETYPE_GIF,
+    'pict.jpg'                  => LIBMTP_FILETYPE_JPEG,
+    '/tmp/file.mpg'             => LIBMTP_FILETYPE_MPEG,
+    'relative/path/to.mpeg'     => LIBMTP_FILETYPE_MPEG,
+    'song.ogg'                  => LIBMTP_FILETYPE_OGG,
+    'extensionFree'             => LIBMTP_FILETYPE_UNKNOWN,
+    '/some/dir.jpg/no_ext'      => LIBMTP_FILETYPE_UNKNOWN,
+    '/no/filename.doc/'         => LIBMTP_FILETYPE_UNKNOWN,
+  );
 
-  use_ok('Media::LibMTP::API::Filetypes', 'filetype');
+  plan tests => 1 + @names/2 + @paths/2;
+
+  use_ok('Media::LibMTP::API::Filetypes', qw(filetype filetype_from_path));
 }
 
-while (@tests) {
-  my $name     = shift @tests;
-  my $expected = shift @tests;
+while (@names) {
+  my $name     = shift @names;
+  my $expected = shift @names;
 
   is(filetype($name), $expected, $name);
-} # end while @tests
+} # end while @names
+
+while (@paths) {
+  my $path     = shift @paths;
+  my $expected = shift @paths;
+
+  is(filetype_from_path($path), $expected, $path);
+} # end while @paths
 
 done_testing;
