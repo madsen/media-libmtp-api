@@ -40,7 +40,7 @@ our %typemap = (
   _f(LIBMTP_FILETYPE_WAV,        qw(wav audio/vnd.wave)),
   _f(LIBMTP_FILETYPE_MP3,        qw(mp3 audio/mpeg)),
   _f(LIBMTP_FILETYPE_WMA,        qw(wma audio/x-ms-wma)),
-  _f(LIBMTP_FILETYPE_OGG,        qw(ogg audio/ogg audio/vorbis)),
+  _f(LIBMTP_FILETYPE_OGG,        qw(ogg oga audio/ogg audio/vorbis)),
   _f(LIBMTP_FILETYPE_AUDIBLE,    qw(aa)),
   _f(LIBMTP_FILETYPE_MP4,        qw(mp4 m4v audio/mp4 video/mp4)),
   _f(LIBMTP_FILETYPE_WMV,        qw(wmv video/x-ms-wmv)),
@@ -78,6 +78,17 @@ our %typemap = (
   _f(LIBMTP_FILETYPE_JPX,        qw(jpx)),
 );
 
+=sub filetype
+
+  $type = filetype($media_type_or_extension);
+
+This takes a filename extension (without the C<.>) or an Internet
+media type (e.g. C<audio/ogg>) and returns the corresponding libmtp
+filetype constant.  If C<$media_type_or_extension> is not recognized,
+then it returns C<LIBMTP_FILETYPE_UNKNOWN>.
+
+=cut
+
 sub filetype
 {
   my $name = shift;
@@ -85,12 +96,26 @@ sub filetype
   $typemap{ lc $name } // LIBMTP_FILETYPE_UNKNOWN;
 } # end filetype
 
+=sub filetype_from_path
+
+  $type = filetype_from_path($filename);
+
+This takes a filename (with or without directory names) and returns
+the corresponding libmtp filetype constant (based on the filename's
+extension only).  The file need not exist on disk.  If the filename's
+extension is not recognized (or it has no extension at all), then it
+returns C<LIBMTP_FILETYPE_UNKNOWN>.
+
+=cut
+
 sub filetype_from_path
 {
   my ($path) = @_;
 
-  if ($path =~ /\.([^.]+)\z/) {
+  if ($path =~ /\.([^.\/\\]+)\z/) {
     filetype($1);
+  } else {
+    LIBMTP_FILETYPE_UNKNOWN;
   }
 } # end filetype_from_path
 
@@ -100,3 +125,21 @@ sub filetype_from_path
 1;
 
 __END__
+
+=head1 SYNOPSIS
+
+  use Media::LibMTP::API::Filetypes qw(filetype filetype_from_path);
+
+  $type = filetype('wav');       # File extension (sans '.')
+  $type = filetype('audio/ogg'); # Internet media type
+  $type = filetype_from_path('/tmp/song.mp3');
+
+=head1 DESCRIPTION
+
+Media::LibMTP::API::Filetypes provides two functions to map Internet
+media types and/or file extensions to the filetype constants defined
+by libmtp (C<LIBMTP_FILETYPE_*>).
+
+=head1 SUBROUTINES
+
+The following functions are exported only by request:
