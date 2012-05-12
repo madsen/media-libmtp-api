@@ -1,6 +1,6 @@
 #! /usr/bin/perl
 #---------------------------------------------------------------------
-# install_audiobook.pl
+# install-audiobook.pl
 # Created by Christopher J. Madsen
 #
 # This example script is in the public domain.
