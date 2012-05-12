@@ -111,6 +111,25 @@ sub import
 }
 
 #---------------------------------------------------------------------
+# Helper method for error messages:
+
+sub Media::LibMTP::API::MTPDevice::errstr
+{
+  my $self = shift;
+
+  my $err = my $errList = $self->Get_Errorstack;
+
+  my @stack;
+
+  while ($err) {
+    push @stack, sprintf "%d: %s", $err->errornumber, $err->error_text;
+    $err = $err->next;
+  }
+
+  join("\n", @stack);
+} # end errstr
+
+#---------------------------------------------------------------------
 require XSLoader;
 XSLoader::load('Media::LibMTP::API', $VERSION);
 

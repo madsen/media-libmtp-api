@@ -86,7 +86,7 @@ sub create_folder
 
   my $new_id = $device->Create_Folder(
     $name, $parent_id, $storage_id
-  ) or die "Creating folder $name failed";
+  ) or die "Creating folder $name failed: " . $device->errstr;
 
   return $new_id;
 } # end create_folder
@@ -211,7 +211,7 @@ for my $directory (@ARGV) {
     # Send the track to the device:
     say "Sending $filenames[$tracknumber]...";
     $device->Send_Track_From_File("$fn", $track)
-        and die "Sending $fn failed";
+        and die "Sending $fn failed: " . $device->errstr;
 
     push @tracks, $track->item_id;
   } # end for $tracknumber in @filenames
@@ -224,7 +224,8 @@ for my $directory (@ARGV) {
   $album->artist($artist) if defined $artist;
   $album->tracks(\@tracks);
 
-  $device->Create_New_Album($album) and die "Create_New_Album failed";
+  $device->Create_New_Album($album)
+      and die "Create_New_Album failed: " . $device->errstr;
 
   # Report details about the new album:
   my $album_id   = $album->album_id;
