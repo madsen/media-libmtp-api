@@ -8,13 +8,28 @@ use 5.010;
 use Module::Build;
 use ExtUtils::PkgConfig;
 
+sub abort_build
+{
+  ++$|;                         # flush STDOUT now
+  print STDERR shift . <<"ABORT_MSG";
+ first:
+  http://libmtp.sourceforge.net/
+
+libmtp version 1.1.0 or later is required.
+ABORT_MSG
+  exit 0;        # bail out if libmtp too old
+} # end abort_build
+
 say 'Looking for installed libmtp with pkg-config...';
 my %libmtp = eval { ExtUtils::PkgConfig->find('libmtp') };
-unless (%libmtp) {
-  say 'It looks like you need to install libmtp first:'.
-      '  http://libmtp.sourceforge.net/';
-  exit 0;        # bail out if no libmtp
-}
+
+abort_build('It looks like you need to install libmtp') unless %libmtp;
+
+say "Found libmtp " . $libmtp{modversion} || 'UNKNOWN VERSION';
+
+abort_build('You need to upgrade to libmtp 1.1.0 or newer')
+    unless $libmtp{modversion} =~ /^(\d+)\.(\d+)/
+       and ($1 > 1 or ($1 == 1 and $2 >= 1));
 
 if (eval {require ExtUtils::Constant; 1}) {
   say 'Regenerating constants...';

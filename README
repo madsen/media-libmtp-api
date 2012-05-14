@@ -29,6 +29,8 @@ See https://rt.perl.org/rt3/Ticket/Display.html?id=112776 for details.
 
 DEPENDENCIES
 
+libmtp 1.1.0 or later
+
 {{ $t->dependency_list }}
 
 

@@ -21,7 +21,7 @@ use 5.010;
 use strict;
 use warnings;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 # This file is part of {{$dist}} {{$dist_version}} ({{$date}})
 
 use Carp qw(croak);
@@ -185,6 +185,10 @@ MTPDeviceList, PlaylistList, and TrackList subclasses: they have a
 destructor that cleans up the list.  For example, the
 C<Get_Album_List> method returns an AlbumList object (a subclass of
 Album), but C<< $album->next >> returns an Album object.
+
+=head1 DEPENDENCIES
+
+libmtp 1.1.0 or later
 
 =head1 SEE ALSO
 
