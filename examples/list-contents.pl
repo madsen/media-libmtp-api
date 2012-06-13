@@ -50,7 +50,7 @@ sub printTree
 } # end printTree
 
 say "\nAlbums:";
-my $album = my $albumList = $device->Get_Album_List;
+my $album = $device->Get_Album_List;
 
 while ($album) {
   say "Title:    " . $album->name . ' (' . $album->album_id . ')';
@@ -68,7 +68,7 @@ while ($album) {
 } # end while $album
 
 say "\nTracks:";
-my $track = my $trackList = $device->Get_Tracklisting;
+my $track = $device->Get_Tracklisting;
 
 while ($track) {
   say "Parent: $folder{$track->parent_id}";

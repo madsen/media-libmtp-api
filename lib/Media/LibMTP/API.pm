@@ -21,7 +21,7 @@ use 5.010;
 use strict;
 use warnings;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 # This file is part of {{$dist}} {{$dist_version}} ({{$date}})
 
 use Carp qw(croak);
@@ -84,30 +84,72 @@ sub import
 } # end import
 
 #---------------------------------------------------------------------
+# Memory management:
+#
+# libmtp often returns a group of structs in one memory allocation.
+# We must keep a pointer to the group until all members of the group
+# are no longer being referenced.
+
+{
+  package Media::LibMTP::API::SubObject;
+
+  my %parent;
+
+  sub DESTROY { delete $parent{ +shift } }
+
+  sub _wrap_constructor
+  {
+    my $method = pop;           # This comes at the end
+    my $self   = shift;
+
+    my $new = $self->$method(@_);
+
+    if (defined $new) {
+      $parent{$new} = $parent{$self} // $self;
+    }
+
+    return $new;
+  } # end _wrap_constructor
+} # end Media::LibMTP::API::SubObject
+
+#---------------------------------------------------------------------
 # Set up inheritance:
-{
-  package Media::LibMTP::API::AlbumList;
-  our @ISA = ('Media::LibMTP::API::Album');
-}
-{
-  package Media::LibMTP::API::FileList;
-  our @ISA = ('Media::LibMTP::API::File');
-}
-{
-  package Media::LibMTP::API::FolderList;
-  our @ISA = ('Media::LibMTP::API::Folder');
-}
-{
-  package Media::LibMTP::API::MTPDeviceList;
-  our @ISA = ('Media::LibMTP::API::MTPDevice');
-}
-{
-  package Media::LibMTP::API::PlaylistList;
-  our @ISA = ('Media::LibMTP::API::Playlist');
-}
-{
-  package Media::LibMTP::API::TrackList;
-  our @ISA = ('Media::LibMTP::API::Track');
+
+BEGIN {
+  my $code;
+
+  my $addMethods = sub {
+    my $class = shift;
+
+    foreach my $method (@_) { $code .= <<"END METHOD" }
+      sub Media::LibMTP::API::${class}::${method} {
+        push \@_, '_${method}';
+        goto &Media::LibMTP::API::SubObject::_wrap_constructor;
+      }
+END METHOD
+  };
+
+  for my $class (qw(Album File Folder MTPDevice Playlist Track)) {
+    $code .= <<"END ISA";
+      \@Media::LibMTP::API::${class}::ISA = ('Media::LibMTP::API::SubObject');
+      \@Media::LibMTP::API::${class}List::ISA = ('Media::LibMTP::API::$class');
+END ISA
+    $addMethods->($class, 'next') unless $class eq 'Folder';
+  } # end for each $class
+
+  # Other methods that return subobjects:
+  $addMethods->(qw(Folder     child sibling Find_Folder));
+  $addMethods->(qw(MTPDevice  storage));
+  @Media::LibMTP::API::DeviceStorage::ISA = ('Media::LibMTP::API::SubObject');
+  $addMethods->(qw(DeviceStorage  next prev));
+
+  #print $code;
+  my $err;
+  {
+    local $@;
+    $err = $@ || "UNKNOWN ERROR" unless eval "$code 1"; ## no critic
+  }
+  die "$code$err" if $err;
 }
 
 #---------------------------------------------------------------------

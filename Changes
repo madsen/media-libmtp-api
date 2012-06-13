@@ -1,5 +1,10 @@
 Revision history for Media-LibMTP
 
+0.03   NOT
+	- Improve memory managment
+	  The new SubObject class automatically maintains the parent
+	  object until it's no longer needed.
+
 0.02   May 14, 2012
 	- Document that libmtp 1.1.0 or newer is required
 

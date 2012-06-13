@@ -240,7 +240,7 @@ no_tracks(self)
 	RETVAL
 
 MLA_Album
-next(self)
+_next(self)
 	MLA_Album	self
    CODE:
 	RETVAL = self->next;
@@ -689,7 +689,7 @@ default_text_folder(self)
 	RETVAL
 
 MLA_MTPDevice
-next(self)
+_next(self)
 	MLA_MTPDevice	self
    CODE:
 	RETVAL = self->next;
@@ -697,7 +697,7 @@ next(self)
 	RETVAL
 
 MLA_DeviceStorage
-storage(self)
+_storage(self)
 	MLA_MTPDevice	self
    CODE:
 	RETVAL = self->storage;
@@ -1347,7 +1347,7 @@ VolumeIdentifier(self)
 	RETVAL
 
 MLA_DeviceStorage
-next(self)
+_next(self)
 	MLA_DeviceStorage	self
    CODE:
 	RETVAL = self->next;
@@ -1355,7 +1355,7 @@ next(self)
 	RETVAL
 
 MLA_DeviceStorage
-prev(self)
+_prev(self)
 	MLA_DeviceStorage	self
    CODE:
 	RETVAL = self->prev;
@@ -1480,7 +1480,7 @@ filetype(self, newValue = NO_INIT)
 	RETVAL
 
 MLA_File
-next(self)
+_next(self)
 	MLA_File	self
    CODE:
 	RETVAL = self->next;
@@ -1644,7 +1644,7 @@ name(self, newValue = NO_INIT)
 	RETVAL
 
 MLA_Folder
-sibling(self)
+_sibling(self)
 	MLA_Folder	self
    CODE:
 	RETVAL = self->sibling;
@@ -1652,14 +1652,14 @@ sibling(self)
 	RETVAL
 
 MLA_Folder
-child(self)
+_child(self)
 	MLA_Folder	self
    CODE:
 	RETVAL = self->child;
    OUTPUT:
 	RETVAL
 
-MODULE = Media::LibMTP::API  PACKAGE = Media::LibMTP::API::Folder  PREFIX = LIBMTP_
+MODULE = Media::LibMTP::API  PACKAGE = Media::LibMTP::API::Folder  PREFIX = LIBMTP
 
 MLA_Folder
 LIBMTP_Find_Folder(arg0, arg1)
@@ -1767,7 +1767,7 @@ no_tracks(self)
 	RETVAL
 
 MLA_Playlist
-next(self)
+_next(self)
 	MLA_Playlist	self
    CODE:
 	RETVAL = self->next;
@@ -2155,7 +2155,7 @@ filetype(self, newValue = NO_INIT)
 	RETVAL
 
 MLA_Track
-next(self)
+_next(self)
 	MLA_Track	self
    CODE:
 	RETVAL = self->next;
