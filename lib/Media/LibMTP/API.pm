@@ -102,13 +102,13 @@ sub import
     my $method = pop;           # This comes at the end
     my $self   = shift;
 
-    my $new = $self->$method(@_);
+    my @new = $self->$method(@_);
 
-    if (defined $new) {
-      $parent{$new} = $parent{$self} // $self;
+    foreach my $new (@new) {
+      $parent{$new} = $parent{$self} // $self if defined $new;
     }
 
-    return $new;
+    return wantarray ? @new : $new[0];
   } # end _wrap_constructor
 } # end Media::LibMTP::API::SubObject
 
@@ -142,7 +142,8 @@ END ISA
   $addMethods->(qw(MTPDevice  storage));
   @Media::LibMTP::API::DeviceStorage::ISA = ('Media::LibMTP::API::SubObject');
   $addMethods->(qw(DeviceStorage  next prev));
-
+  @Media::LibMTP::API::RawDevice::ISA = ('Media::LibMTP::API::SubObject');
+  $addMethods->(qw(RawDeviceList  device devices));
   #print $code;
   my $err;
   {

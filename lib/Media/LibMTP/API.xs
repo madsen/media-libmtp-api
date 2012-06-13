@@ -1874,7 +1874,7 @@ count(self)
 	RETVAL
 
 MLA_RawDevice
-device(self, index)
+_device(self, index)
 	MLA_RawDeviceList	self
 	int			index
    CODE:
@@ -1887,7 +1887,7 @@ device(self, index)
 	RETVAL
 
 void
-devices(self)
+_devices(self)
 	MLA_RawDeviceList	self
    PREINIT:
 	int i;
