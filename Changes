@@ -1,6 +1,6 @@
 Revision history for Media-LibMTP
 
-0.03   NOT
+0.03   July 4, 2012
 	- Improve memory managment
 	  The new SubObject class automatically maintains the parent
 	  object until it's no longer needed.
