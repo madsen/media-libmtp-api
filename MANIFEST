@@ -5,6 +5,7 @@ MANIFEST
 META.json
 META.yml
 README
+examples/delete-folder.pl
 examples/delete-objects.pl
 examples/install-audiobook.pl
 examples/list-contents.pl

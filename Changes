@@ -4,6 +4,7 @@ Revision history for Media-LibMTP
 	- Improve memory managment
 	  The new SubObject class automatically maintains the parent
 	  object until it's no longer needed.
+	- Add examples/delete-folder.pl
 
 0.02   May 14, 2012
 	- Document that libmtp 1.1.0 or newer is required
