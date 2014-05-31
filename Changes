@@ -1,5 +1,9 @@
 Revision history for Media-LibMTP
 
+0.04   NOT
+	- Media type audio/mp4 now maps to LIBMTP_FILETYPE_M4A
+	  instead of LIBMTP_FILETYPE_MP4
+
 0.03   2012-07-04
 	- Improve memory managment
 	  The new SubObject class automatically maintains the parent

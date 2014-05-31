@@ -21,7 +21,7 @@ use 5.010;
 use strict;
 use warnings;
 
-our $VERSION = '0.01';
+our $VERSION = '0.04';
 # This file is part of {{$dist}} {{$dist_version}} ({{$date}})
 
 use Exporter 5.57 'import';     # exported import method
@@ -42,7 +42,7 @@ our %typemap = (
   _f(LIBMTP_FILETYPE_WMA,        qw(wma audio/x-ms-wma)),
   _f(LIBMTP_FILETYPE_OGG,        qw(ogg oga audio/ogg audio/vorbis)),
   _f(LIBMTP_FILETYPE_AUDIBLE,    qw(aa)),
-  _f(LIBMTP_FILETYPE_MP4,        qw(mp4 m4v audio/mp4 video/mp4)),
+  _f(LIBMTP_FILETYPE_MP4,        qw(mp4 m4v video/mp4)),
   _f(LIBMTP_FILETYPE_WMV,        qw(wmv video/x-ms-wmv)),
   _f(LIBMTP_FILETYPE_AVI,        qw(avi)),
   _f(LIBMTP_FILETYPE_MPEG,       qw(mpg mpeg video/mpeg)),
@@ -68,7 +68,7 @@ our %typemap = (
   _f(LIBMTP_FILETYPE_MEDIACARD,  qw()),
   _f(LIBMTP_FILETYPE_FLAC,       qw(flac fla audio/flac)),
   _f(LIBMTP_FILETYPE_MP2,        qw(mp2)),
-  _f(LIBMTP_FILETYPE_M4A,        qw(m4a)),
+  _f(LIBMTP_FILETYPE_M4A,        qw(m4a audio/mp4)),
   _f(LIBMTP_FILETYPE_DOC,        qw(doc application/msword)),
   _f(LIBMTP_FILETYPE_XML,        qw(xml text/xml)),
   _f(LIBMTP_FILETYPE_XLS,        qw(xls application/vnd.ms-excel)),
