@@ -1,4 +1,4 @@
-#! /usr/bin/perl
+#! /usr/bin/env perl
 #---------------------------------------------------------------------
 # Created by Christopher J. Madsen
 #

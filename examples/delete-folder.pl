@@ -1,4 +1,4 @@
-#! /usr/bin/perl
+#! /usr/bin/env perl
 #---------------------------------------------------------------------
 # delete-folder.pl
 # Created by Christopher J. Madsen

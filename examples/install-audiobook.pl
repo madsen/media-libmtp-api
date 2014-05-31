@@ -1,4 +1,4 @@
-#! /usr/bin/perl
+#! /usr/bin/env perl
 #---------------------------------------------------------------------
 # install-audiobook.pl
 # Created by Christopher J. Madsen

@@ -1,4 +1,4 @@
-#! /usr/bin/perl
+#! /usr/bin/env perl
 #---------------------------------------------------------------------
 # delete-objects.pl
 # Created by Christopher J. Madsen
