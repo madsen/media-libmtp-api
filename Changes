@@ -1,6 +1,7 @@
 Revision history for Media-LibMTP
 
 0.04   NOT
+	- Document the memory managment change made in 0.03
 	- Media type audio/mp4 now maps to LIBMTP_FILETYPE_M4A
 	  instead of LIBMTP_FILETYPE_MP4
 
