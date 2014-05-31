@@ -19,5 +19,5 @@ lib/Media/LibMTP/ppport.h
 t/00-all_prereqs.t
 t/00-load.t
 t/10-filetypes.t
-t/release-pod-syntax.t
 typemap
+xt/release/pod-syntax.t
